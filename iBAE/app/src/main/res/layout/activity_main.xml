@@ -20,11 +20,13 @@
         app:menu="@menu/navigation" />
 
     <fragment
-        android:id="@+id/fragment"
-        android:name="fr.toulouse.miage.ibae.HomeActivity"
-        android:layout_width="392dp"
-        android:layout_height="455dp"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp" />
+        android:id="@+id/contenu"
+        android:name="fr.toulouse.miage.ibae.Fragments.HomeFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/navigation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
