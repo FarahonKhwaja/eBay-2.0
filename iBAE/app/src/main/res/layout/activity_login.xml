@@ -42,7 +42,6 @@
         android:layout_marginBottom="68dp"
         android:text="Connexion"
         android:textAlignment="center"
-        android:textAppearance="@android:style/TextAppearance.Material.Large"
         app:layout_constraintBottom_toTopOf="@+id/et_nom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -56,7 +55,8 @@
         android:layout_marginBottom="16dp"
         android:text="Connexion"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:onClick="onClickConnexion"/>
 
     <TextView
         android:id="@+id/tv_nom"
