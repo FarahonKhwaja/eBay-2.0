@@ -18,4 +18,10 @@ public class LoginActivity extends AppCompatActivity {
         myIntent.putExtra("key", "value"); //Optional parameters
         this.startActivity(myIntent);
     }
+
+    protected void onClickInscription(View v){
+        Intent myIntent = new Intent(this, InscriptionActivity.class);
+        myIntent.putExtra("key", "value"); //Optional parameters
+        this.startActivity(myIntent);
+    }
 }
