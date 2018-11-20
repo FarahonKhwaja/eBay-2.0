@@ -1,16 +1,21 @@
 package fr.toulouse.miage.ibae;
 
 import android.os.Bundle;
+import android.os.NetworkOnMainThreadException;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import org.apache.http.entity.*;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -73,19 +78,7 @@ public class InscriptionActivity extends AppCompatActivity {
 
         if(ok){
             JSONObject utilisateur = writeJSON();
-
-            try {
-                URL url = new URL("http://localhost:8080/users");
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.setDoOutput(true);
-                conn.setRequestMethod("POST");
-                conn.setRequestProperty("Content-Type", "application/json");
-            }
-            catch(Exception e)
-            {
-                Logger.getAnonymousLogger().log(Level.SEVERE, e.getMessage());
-            }
-
+            SendUserCreation.execute((Runnable) utilisateur);
         }
     }
     protected JSONObject writeJSON(){
