@@ -11,9 +11,11 @@ var app = express();
 
 // Utilisation de mongoDB pour le stockage des informations
 var mongoose = require('mongoose');
+require('mongoose-double')(mongoose);
 
 // Définition des schémas pour utiliser mongo
 var Schema = mongoose.Schema;
+var SchemaTypes = mongoose.Schema.Types;
 
 // utilisation de bodyParser pour récupérer les données d'un POST par exemple
 var bodyParser = require('body-parser');
@@ -25,6 +27,7 @@ app.use(bodyParser.json());
 
 //// connexion à la base de données mongoDB
 
+// Préparation accès
 var url = 'mongodb://localhost:27017/android';
 var options = {
   useNewUrlParser: true
@@ -37,6 +40,33 @@ mongoose.connect(url, options, function(error) {
   console.log(colors.yellow("Connexion réussie !"));
 });
 var db = mongoose.connection;
+
+// Définition des schémas
+var annonceSchema = mongoose.Schema({
+  nom: String,
+  description: String,
+  prix_min: SchemaTypes.Double,
+  dateCreation: String,
+  duree: Number,
+  photo: String,
+  etat: String,
+  derniereEnchere: SchemaTypes.Double,
+  utilisateurEnchere: String
+});
+
+var userSchema = mongoose.Schema({
+  nom: String,
+  prenom: String,
+  mail: String,
+  username: String,
+  pwd: String,
+  adresse: String,
+  photo: String
+});
+
+// Définition des modèles
+var annonceModel = mongoose.model('annonce', annonceSchema);
+var userModel = mongoose.model('user', userSchema);
 
 //// Port qui sera utilisé pour l'API REST
 var port = 8080;
