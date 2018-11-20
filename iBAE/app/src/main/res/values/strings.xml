@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">iBAE</string>
     <string name="title_activity_main">MainActivity</string>
-    <string name="title_home">Acceuil</string>
+    <string name="title_home">Accueil</string>
     <string name="title_dashboard">Vendre</string>
     <string name="title_notifications">Profil</string>
 </resources>
