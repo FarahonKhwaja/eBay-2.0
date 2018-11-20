@@ -13,8 +13,15 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
     }
 
-    public void connection(View view) {
-        Intent acceuil = new Intent(this, MainActivity.class);
-        this.startActivity(acceuil);
+    protected void onClickConnexion(View v){
+        Intent myIntent = new Intent(this, MainActivity.class);
+        myIntent.putExtra("key", "value"); //Optional parameters
+        this.startActivity(myIntent);
+    }
+
+    protected void onClickInscription(View v){
+        Intent myIntent = new Intent(this, InscriptionActivity.class);
+        myIntent.putExtra("key", "value"); //Optional parameters
+        this.startActivity(myIntent);
     }
 }
