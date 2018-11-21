@@ -9,4 +9,8 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="login_register">S\'inscrire</string>
+    <string name="login_connexion">Connexion</string>
+    <string name="login_name">Nom</string>
+    <string name="login_passwd">Mot de passe</string>
 </resources>
