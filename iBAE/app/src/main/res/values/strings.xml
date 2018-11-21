@@ -13,4 +13,8 @@
     <string name="login_connexion">Connexion</string>
     <string name="login_name">Nom</string>
     <string name="login_passwd">Mot de passe</string>
+    <string name="home_welcome">Bienvenue</string>
+    <string name="home_message">Qu\'est ce que vous avez bien envie d\'acheter aujourd\'hui ?</string>
+    <string name="home_search">Ma recherche</string>
+    <string name="home_btn_search">Je veux dépenser de l\'argent</string>
 </resources>

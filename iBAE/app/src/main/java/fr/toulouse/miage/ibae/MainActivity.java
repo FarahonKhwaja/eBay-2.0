@@ -23,10 +23,10 @@ public class MainActivity extends FragmentActivity {
                 case R.id.navigation_home:
                     replaceFragment(R.id.contenu, new HomeFragment(), "home");
                     return true;
-                case R.id.navigation_dashboard:
+                case R.id.navigation_sell:
                     replaceFragment(R.id.contenu, new VendreFragment(), "vendre");
                     return true;
-                case R.id.navigation_notifications:
+                case R.id.navigation_profile:
                     //TODO : Fragment profil
                     return true;
 
