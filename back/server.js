@@ -43,10 +43,12 @@ var db = mongoose.connection;
 
 // Définition des schémas
 var annonceSchema = mongoose.Schema({
+  id: Number,
   nom: String,
   description: String,
   prix_min: SchemaTypes.Double,
   dateCreation: String,
+  utilisateurCreation: String,
   duree: Number,
   photo: String,
   etat: String,
@@ -55,6 +57,7 @@ var annonceSchema = mongoose.Schema({
 });
 
 var userSchema = mongoose.Schema({
+  id: Number,
   nom: String,
   prenom: String,
   mail: String,
@@ -97,9 +100,40 @@ router.route('/users')
   .post(function(req, res) {
     var user = req.body;
 
-    res.json(user);
+    userModel.findOne({
+      username: user.username
+    }).exec(function(err, usercheck) {
 
-    console.dir(user);
+      if (!usercheck) {
+
+        userModel.aggregate([{
+          $group: {
+            _id: null,
+            max: {
+              $max: "$id"
+            }
+          }
+        }]).exec(function(err, reponse) {
+          if (!reponse.length) {
+            user.id = 0
+          } else {
+            user.id = reponse[0].max + 1;
+          }
+
+          userModel.create(user, function(err, userInsere) {
+            console.log(userInsere);
+            res.json(userInsere);
+          });
+        });
+
+      } else {
+        res.status(409);
+        res.json({
+          message: "l'utilisateur existe déjà"
+        });
+        console.log("l'utilisateur existe déjà");
+      }
+    });
   });
 
 // Définition de la route pour "/user"
@@ -186,7 +220,7 @@ router.route('/annonce/:id')
   });
 
 
-// Utilisation du routeur pour toutes les routes qui commencent pas "/"
+// Utilisation du routeur pour toutes les routes qui commencent par "/"
 app.use('/', router);
 
 //// Lancement de l'application
