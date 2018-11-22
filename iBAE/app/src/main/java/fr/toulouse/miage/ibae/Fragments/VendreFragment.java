@@ -19,6 +19,7 @@ import fr.toulouse.miage.ibae.R;
  */
 public class VendreFragment extends Fragment {
 
+
     public VendreFragment() {
         // Required empty public constructor
     }
@@ -49,6 +50,8 @@ public class VendreFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_vendre, container, false);
     }
+
+
 
 
 }

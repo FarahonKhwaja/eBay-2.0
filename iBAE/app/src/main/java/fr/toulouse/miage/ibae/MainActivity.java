@@ -1,17 +1,25 @@
 package fr.toulouse.miage.ibae;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 
 import fr.toulouse.miage.ibae.Fragments.HomeFragment;
 import fr.toulouse.miage.ibae.Fragments.VendreFragment;
 
 public class MainActivity extends FragmentActivity {
+
+    static final int REQUEST_IMAGE_CAPTURE = 1;
+
 
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -60,4 +68,21 @@ public class MainActivity extends FragmentActivity {
                 .commit();
     }
 
+    public void clickAjoutPhoto(View view) {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        }
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            ImageView imgArticle = findViewById(R.id.sell_img);
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            imgArticle.setImageBitmap(imageBitmap);
+        }
+    }
 }

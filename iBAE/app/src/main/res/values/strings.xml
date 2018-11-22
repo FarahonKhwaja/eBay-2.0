@@ -17,4 +17,9 @@
     <string name="home_message">Qu\'est ce que vous avez bien envie d\'acheter aujourd\'hui ?</string>
     <string name="home_search">Ma recherche</string>
     <string name="home_btn_search">Je veux dépenser de l\'argent</string>
+    <string name="sell_btn_valid">Mettre en ligne</string>
+    <string name="sell_title">Titre de l\'annonce</string>
+    <string name="sell_description">Description de l\'article</string>
+    <string name="sell_btn_get_photo">Ajouter une photo</string>
+    <string name="sell_price_init">Prix de départ de l\'enchère</string>
 </resources>
