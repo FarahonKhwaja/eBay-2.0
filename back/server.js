@@ -140,19 +140,15 @@ router.route('/users')
 router.route('/user/:id')
   .get(function(req, res) {
 
-    var reponse = {
-      "nom": "LENOM",
-      "prenom": "LEPRENOM",
-      "mail": "LEPRENOM.LENOM@EMAIL.FR²",
-      "username": "LEPRENOM.LENOM",
-      "pwd": "secret123456",
-      "adresse": "1 rue de l'adresse 31000 Toulouse",
-      "photo": "http://buzz.io/wp-content/uploads/2014/02/worst_edited_photos_for_profiles_4.jpg" //url de la photo de profil
-    };
+    userModel.findOne({
+      id: req.params.id
+    }, {
+      _id: 0
+    }).exec(function(err, utilisateur) {
+      res.json(utilisateur);
 
-    res.json(reponse);
-
-    console.dir(reponse);
+      console.log(utilisateur);
+    })
   });
 
 // Définition de la route pour "/annonces"
