@@ -154,33 +154,13 @@ router.route('/user/:id')
 // Définition de la route pour "/annonces"
 router.route('/annonces')
   .get(function(req, res) {
-    var reponse = [{
-        "nom": "annonce 1",
-        "description": "ceci est la première annonce et elle est bien",
-        "prix_min": 0.01,
-        "dateCreation": "2018-01-01 00:00:01",
-        "duree": 5,
-        "photo": "https://www.och.fr/sites/default/files/envoyez-nous_votre_annonce.jpg",
-        "etat": "active",
-        "derniereEnchere": 1000.01,
-        "utilisateurEnchere": "Philippe RG"
-      },
-      {
-        "nom": "annonce 2",
-        "description": "ceci est une annonce encore mieux",
-        "prix_min": 10.00,
-        "dateCreation": "2018-11-01 12:35:56",
-        "duree": 5,
-        "photo": "https://aae-fgi.org/sites/default/files/field/annonce/annonce_2.jpg",
-        "etat": "active",
-        "derniereEnchere": 10.01,
-        "utilisateurEnchere": "Philippe RG 2"
-      }
-    ]
+    annonceModel.find({}, {
+      _id: 0
+    }).exec(function(err, annonces) {
+      res.json(annonces);
 
-    res.json(reponse);
-
-    console.dir(reponse);
+      console.log(annonces);
+    })
   })
   .post(function(req, res) {
     var annonce = req.body;
