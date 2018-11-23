@@ -31,7 +31,7 @@ ajoute un utilisateur au format :
   "mail": "adresse mail",
   "username": "pseudo",
   "pwd": "mot de passer",
-  "adresse": "adresse mail",
+  "adresse": "adresse postale",
   "photo": "url d'une image"
 }
 ```
