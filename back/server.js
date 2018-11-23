@@ -237,5 +237,5 @@ router.route('/annonce/:id')
 app.use('/', router);
 
 //// Lancement de l'application
-app.listen(port);
+app.listen(port, '0.0.0.0');
 console.log(colors.yellow('Go on localhost:' + port + ' !'));
