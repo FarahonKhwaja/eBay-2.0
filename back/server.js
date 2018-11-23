@@ -184,9 +184,26 @@ router.route('/annonces')
   })
   .post(function(req, res) {
     var annonce = req.body;
-    res.json(annonce);
+    annonceModel.aggregate([{
+      $group: {
+        _id: null,
+        max: {
+          $max: "$id"
+        }
+      }
+    }]).exec(function(err, reponse) {
+      if (!reponse.length) {
+        annonce.id = 0
+      } else {
+        annonce.id = reponse[0].max + 1;
+      }
 
-    console.dir(annonce);
+      annonceModel.create(annonce, function(err, annonceInsere) {
+        console.log(annonceInsere);
+        res.json(annonceInsere);
+      });
+    });
+
   });
 
 // Définition de la route pour "/annonce"
