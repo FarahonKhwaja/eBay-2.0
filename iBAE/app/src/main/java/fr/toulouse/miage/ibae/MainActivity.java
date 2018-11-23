@@ -2,16 +2,21 @@ package fr.toulouse.miage.ibae;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 import fr.toulouse.miage.ibae.Fragments.HomeFragment;
 import fr.toulouse.miage.ibae.Fragments.VendreFragment;
@@ -19,6 +24,8 @@ import fr.toulouse.miage.ibae.Fragments.VendreFragment;
 public class MainActivity extends FragmentActivity {
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
+    static final int GALLERY_REQUEST = 2;
+
 
 
 
@@ -78,11 +85,32 @@ public class MainActivity extends FragmentActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+        if (resultCode == RESULT_OK) {
             ImageView imgArticle = findViewById(R.id.sell_img);
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            imgArticle.setImageBitmap(imageBitmap);
+            switch (requestCode){
+                case GALLERY_REQUEST:
+                    Uri selectedImage = data.getData();
+                    try {
+                        InputStream imageStream = getContentResolver().openInputStream(selectedImage);
+                        Bitmap image = BitmapFactory.decodeStream(imageStream);
+                        imgArticle.setImageBitmap(image);
+                    } catch (IOException e) {
+                        Log.i("TAG", "Some exception " + e);
+                    }
+                    break;
+                case REQUEST_IMAGE_CAPTURE:
+                    Bundle extras = data.getExtras();
+                    Bitmap imageBitmap = (Bitmap) extras.get("data");
+                    imgArticle.setImageBitmap(imageBitmap);
+                    break;
+            }
+
         }
+    }
+
+    public void clickGetPhoto(View view) {
+        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+        photoPickerIntent.setType("image/*");
+        startActivityForResult(photoPickerIntent, GALLERY_REQUEST);
     }
 }

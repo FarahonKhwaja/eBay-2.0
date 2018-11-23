@@ -20,6 +20,7 @@
     <string name="sell_btn_valid">Mettre en ligne</string>
     <string name="sell_title">Titre de l\'annonce</string>
     <string name="sell_description">Description de l\'article</string>
-    <string name="sell_btn_get_photo">Ajouter une photo</string>
+    <string name="sell_btn_take_photo">Prendre une photo</string>
     <string name="sell_price_init">Prix de départ de l\'enchère</string>
+    <string name="sell_btn_get_photo">Sélectionner une photo</string>
 </resources>

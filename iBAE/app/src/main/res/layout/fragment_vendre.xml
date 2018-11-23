@@ -49,12 +49,12 @@
 
         <Button
             android:id="@+id/sell_btn_get_photo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="145dp"
+            android:layout_height="53dp"
             android:layout_marginTop="8dp"
-            android:text="@string/sell_btn_get_photo"
             android:onClick="clickAjoutPhoto"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:text="@string/sell_btn_take_photo"
+            app:layout_constraintEnd_toStartOf="@+id/sell_btn_take_photo"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/sell_img" />
@@ -82,6 +82,18 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/sell_btn_get_photo" />
+
+        <Button
+            android:id="@+id/sell_btn_take_photo"
+            android:layout_width="145dp"
+            android:layout_height="53dp"
+            android:layout_marginTop="8dp"
+            android:onClick="clickGetPhoto"
+            android:text="@string/sell_btn_get_photo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/sell_btn_get_photo"
+            app:layout_constraintTop_toBottomOf="@+id/sell_img" />
 
     </android.support.constraint.ConstraintLayout>
 </FrameLayout>
