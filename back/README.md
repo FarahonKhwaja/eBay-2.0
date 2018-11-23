@@ -80,3 +80,36 @@ retourne l'utilisateur `id` si il existe en base au format :
 }
 ```
 Si l'utilisateur n'existe pas, retourne alors : `null`
+
+### /annonces
+
+#### POST
+
+ajoute à la base de données une annonce de la forme :
+
+```json
+{
+  "nom": "nom",
+  "description": "description",
+  "prix_min": 0.00,
+  "creePar": "creePar",
+  "duree": 5,
+  "photo": "url image"
+}
+```
+
+retourne l'annonce insérée au format :
+```json
+{
+  "nom": "nom",
+  "description": "description",
+  "prix_min": 0.00,
+  "dateCreation": "2018-01-01 00:00:01",
+  "creePar": "creePar",
+  "duree": 5,
+  "photo": "url image",
+  "etat": "active",
+  "derniereEnchere": 1000.01,
+  "utilisateurEnchere": "Philippe RG"
+}
+```
