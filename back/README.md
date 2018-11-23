@@ -113,3 +113,7 @@ retourne l'annonce insérée au format :
   "utilisateurEnchere": "Philippe RG"
 }
 ```
+
+#### GET
+
+Retourne une liste d'annonces
