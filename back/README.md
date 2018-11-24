@@ -149,3 +149,27 @@ Retourne une liste d'annonces au format :
   "utilisateurEnchere": "utilisateurEnchere"
 }]
 ```
+
+### /annonce/:id
+
+#### GET
+
+retourne l'annonce `id` sous la forme :
+
+```json
+{
+  "id": 0,
+  "nom": "nom",
+  "description": "description",
+  "prix_min": 0.00,
+  "dateCreation": "2018-01-01 00:00:01",
+  "creePar": "creePar",
+  "duree": 5,
+  "photo": "url image",
+  "etat": "active",
+  "derniereEnchere": 0.00,
+  "utilisateurEnchere": "utilisateurEnchere"
+}
+```
+
+retourne `null` si `id` n'est pas présent en base

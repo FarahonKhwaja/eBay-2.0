@@ -189,21 +189,15 @@ router.route('/annonces')
 // Définition de la route pour "/annonce"
 router.route('/annonce/:id')
   .get(function(req, res) {
-    var reponse = {
-      "nom": "annonce 1",
-      "description": "ceci est la première annonce et elle est bien",
-      "prix_min": 0.01,
-      "dateCreation": "2018-01-01 00:00:01",
-      "duree": 5,
-      "photo": "https://www.och.fr/sites/default/files/envoyez-nous_votre_annonce.jpg",
-      "etat": "active",
-      "derniereEnchere": 1000.01,
-      "utilisateurEnchere": "Philippe RG"
-    };
+    annonceModel.findOne({
+      id: req.params.id
+    }, {
+      _id: 0
+    }).exec(function(err, annonce) {
+      res.json(annonce);
 
-    res.json(reponse);
-
-    console.dir(reponse);
+      console.log(annonce);
+    })
   })
   .put(function(req, res) {
     var annonce = req.body;
