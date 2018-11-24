@@ -200,10 +200,21 @@ router.route('/annonce/:id')
     })
   })
   .put(function(req, res) {
-    var annonce = req.body;
+    var annonceAMAJ = req.body;
 
-    res.json(annonce);
-    console.dir(annonce);
+    var condition = {
+      "id": annonceAMAJ.id
+    };
+
+    var updates = {
+      "derniereEnchere": annonceAMAJ.derniereEnchere,
+      "utilisateurEnchere": annonceAMAJ.utilisateurEnchere
+    };
+
+    annonceModel.update(condition, updates, function(err, resultat) {
+      res.json(resultat);
+      console.log(resultat);
+    })
   });
 
 

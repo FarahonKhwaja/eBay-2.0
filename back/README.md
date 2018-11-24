@@ -173,3 +173,25 @@ retourne l'annonce `id` sous la forme :
 ```
 
 retourne `null` si `id` n'est pas présent en base
+
+#### PUT
+
+met à jour une annonce en utilisant en entrée un format :
+
+```json
+{
+  "id": 0,
+  "derniereEnchere": 0.00,
+  "utilisateurEnchere": "utilisateurEnchere"
+}
+```
+
+retourne si l'annonce a été modifié au format :
+
+```json
+{
+  "ok": 1,
+  "nModified": 1,
+  "n": 1
+}
+```
