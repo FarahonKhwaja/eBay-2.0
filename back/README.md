@@ -79,6 +79,7 @@ retourne l'utilisateur `id` si il existe en base au format :
   "photo": "url d'une image"
 }
 ```
+
 Si l'utilisateur n'existe pas, retourne alors : `null`
 
 ### /annonces
@@ -99,8 +100,10 @@ ajoute à la base de données une annonce de la forme :
 ```
 
 retourne l'annonce insérée au format :
+
 ```json
 {
+  "id": 0,
   "nom": "nom",
   "description": "description",
   "prix_min": 0.00,
@@ -109,11 +112,40 @@ retourne l'annonce insérée au format :
   "duree": 5,
   "photo": "url image",
   "etat": "active",
-  "derniereEnchere": 1000.01,
-  "utilisateurEnchere": "Philippe RG"
+  "derniereEnchere": 0.00,
+  "utilisateurEnchere": "utilisateurEnchere"
 }
 ```
 
 #### GET
 
-Retourne une liste d'annonces
+Retourne une liste d'annonces au format :
+
+```json
+[{
+  "id": 0,
+  "nom": "nom",
+  "description": "description",
+  "prix_min": 0.00,
+  "dateCreation": "2018-01-01 00:00:01",
+  "creePar": "creePar",
+  "duree": 5,
+  "photo": "url image",
+  "etat": "active",
+  "derniereEnchere": 0.00,
+  "utilisateurEnchere": "utilisateurEnchere"
+},
+{
+  "id": 1,
+  "nom": "nom2",
+  "description": "description",
+  "prix_min": 0.00,
+  "dateCreation": "2018-01-01 00:00:01",
+  "creePar": "creePar",
+  "duree": 5,
+  "photo": "url image",
+  "etat": "active",
+  "derniereEnchere": 0.00,
+  "utilisateurEnchere": "utilisateurEnchere"
+}]
+```
