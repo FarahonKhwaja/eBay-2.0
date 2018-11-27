@@ -3,9 +3,18 @@ package fr.toulouse.miage.ibae;
 import android.os.Bundle;
 import android.os.NetworkOnMainThreadException;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -35,32 +44,12 @@ public class InscriptionActivity extends AppCompatActivity {
         username = findViewById(R.id.et_pseudo);
         password1 = findViewById(R.id.et_pass1);
         password2 = findViewById(R.id.et_pass2);
-
-        /*mail.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                // TODO Auto-generated method stub
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                // TODO Auto-generated method stub
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                // TODO Auto-generated method stub
-                if (!s.toString().contains(".") || !s.toString().contains("@")) {
-                    Toast.makeText(InscriptionActivity.this, "Adresse mail invalide", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });*/
     }
 
     protected void onClickInscription(View v){
         boolean ok = true;
-        Logger.getAnonymousLogger().log(Level.INFO, "OnClickInscription : " + nom.getText().toString());
+
+        //CHECK REMPLISSAGE DES CHAMPS
         if(nom.getText().toString().equals(null) || prenom.getText().toString().equals(null) || mail.getText().toString().equals(null) ||
                 username.getText().toString().equals(null) || password1.getText().toString().equals(null) || password2.getText().toString().equals(null))
         {
@@ -75,10 +64,29 @@ public class InscriptionActivity extends AppCompatActivity {
             Toast.makeText(this, "Un des champs est vide", Toast.LENGTH_SHORT).show();
             ok = false;
         }
+        //FIN CHECK REMPLISSAGE DES CHAMPS
+
 
         if(ok){
+            Logger.getAnonymousLogger().log(Level.WARNING, "CHECKS OK");
             JSONObject utilisateur = writeJSON();
-            SendUserCreation.execute((Runnable) utilisateur);
+            // Instantiate the RequestQueue.
+            RequestQueue queue = Volley.newRequestQueue(this);
+            String url = "http://192.168.0.14:8080/users";
+
+            // Request a string response from the provided URL.
+            JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST ,url, writeJSON(), new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    Log.i("SERVER RESPONSE", response.toString());
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.e("SERVER RESPONSE", error.toString());
+                }
+            });
+            queue.add(request);
         }
     }
     protected JSONObject writeJSON(){
