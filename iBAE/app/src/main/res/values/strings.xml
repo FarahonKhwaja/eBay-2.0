@@ -3,7 +3,7 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="title_home">Accueil</string>
     <string name="title_dashboard">Vendre</string>
-    <string name="title_notifications">Profil</string>
+    <string name="title_param">Paramètres</string>
     <string name="s_inscrire">S\'inscrire</string>
     <string name="repeter_mdp">Répétez votre mot de passe</string>
 
@@ -23,4 +23,6 @@
     <string name="sell_btn_take_photo">Prendre une photo</string>
     <string name="sell_price_init">Prix de départ de l\'enchère</string>
     <string name="sell_btn_get_photo">Sélectionner une photo</string>
+    <string name="param_text_ip">IP du serveur (version de dev)</string>
+    <string name="ip_hint">XXXX.XXXX.XXXX.XXXX</string>
 </resources>

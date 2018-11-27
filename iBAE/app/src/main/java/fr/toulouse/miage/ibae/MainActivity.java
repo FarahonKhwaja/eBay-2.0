@@ -46,6 +46,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import fr.toulouse.miage.ibae.Fragments.HomeFragment;
+import fr.toulouse.miage.ibae.Fragments.ProfileFragment;
 import fr.toulouse.miage.ibae.Fragments.VendreFragment;
 
 public class MainActivity extends FragmentActivity {
@@ -79,7 +80,7 @@ public class MainActivity extends FragmentActivity {
                     replaceFragment(R.id.contenu, new VendreFragment(), "vendre");
                     return true;
                 case R.id.navigation_profile:
-                    //TODO : Fragment profil
+                    replaceFragment(R.id.contenu, new ProfileFragment(), "profil");
                     return true;
 
             }
