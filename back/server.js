@@ -136,6 +136,23 @@ router.route('/users')
     });
   });
 
+router.route('/usercheck')
+  .post(function(req, res) {
+    var user = req.body;
+
+    console.log(user);
+
+    userModel.findOne({
+      username: user.username,
+      pwd: user.pwd
+    }).exec(function(err, usercheck) {
+      console.log(err);
+      res.json(usercheck);
+      console.log(usercheck);
+    });
+
+  });
+
 // Définition de la route pour "/user"
 router.route('/user/:id')
   .get(function(req, res) {
