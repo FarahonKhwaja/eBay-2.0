@@ -3,7 +3,7 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="title_home">Accueil</string>
     <string name="title_dashboard">Vendre</string>
-    <string name="title_notifications">Profil</string>
+    <string name="title_param">Paramètres</string>
     <string name="s_inscrire">S\'inscrire</string>
     <string name="repeter_mdp">Répétez votre mot de passe</string>
 
@@ -11,7 +11,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="login_register">S\'inscrire</string>
     <string name="login_connexion">Connexion</string>
-    <string name="login_name">Nom</string>
+    <string name="login_name">Nom d\'utilisateur</string>
     <string name="login_passwd">Mot de passe</string>
     <string name="home_welcome">Bienvenue</string>
     <string name="home_message">Qu\'est ce que vous avez bien envie d\'acheter aujourd\'hui ?</string>
@@ -23,4 +23,8 @@
     <string name="sell_btn_take_photo">Prendre une photo</string>
     <string name="sell_price_init">Prix de départ de l\'enchère</string>
     <string name="sell_btn_get_photo">Sélectionner une photo</string>
+    <string name="param_text_ip">IP du serveur (version de dev)</string>
+    <string name="ip_hint">XXXX.XXXX.XXXX.XXXX</string>
+    <string name="title_alert_update_server">Mise à jour IP serveur</string>
+    <string name="message_update_server">La nouvelle IP du serveur a bien été enregistrée</string>
 </resources>

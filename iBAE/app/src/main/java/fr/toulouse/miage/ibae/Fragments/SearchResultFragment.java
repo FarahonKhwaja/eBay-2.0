@@ -9,19 +9,17 @@ import android.view.ViewGroup;
 import fr.toulouse.miage.ibae.R;
 
 
-public class ProfileFragment extends Fragment {
+
+public class SearchResultFragment extends Fragment {
 
 
-    public ProfileFragment() {
+    public SearchResultFragment() {
         // Required empty public constructor
     }
 
 
-    public static ProfileFragment newInstance() {
-        ProfileFragment fragment = new ProfileFragment();
-        Bundle args = new Bundle();
-
-        fragment.setArguments(args);
+    public static SearchResultFragment newInstance(String param1, String param2) {
+        SearchResultFragment fragment = new SearchResultFragment();
         return fragment;
     }
 
@@ -34,8 +32,6 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+        return inflater.inflate(R.layout.fragment_search_result, container, false);
     }
-
-
 }
