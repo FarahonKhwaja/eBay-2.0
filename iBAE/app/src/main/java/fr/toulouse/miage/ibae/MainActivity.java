@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -28,28 +27,23 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import fr.toulouse.miage.ibae.Fragments.HomeFragment;
-import fr.toulouse.miage.ibae.Fragments.ProfileFragment;
-import fr.toulouse.miage.ibae.Fragments.VendreFragment;
+import fr.toulouse.miage.ibae.fragments.HomeFragment;
+import fr.toulouse.miage.ibae.fragments.ProfileFragment;
+import fr.toulouse.miage.ibae.fragments.VendreFragment;
 
 public class MainActivity extends FragmentActivity {
 
