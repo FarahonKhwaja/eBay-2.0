@@ -47,6 +47,9 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(this, "Un des champs est vide", Toast.LENGTH_SHORT).show();
             ok = false;
         }
+        if (!(findViewById(R.id.login_ip).toString().equals(""))){
+            Ressources.URL ="http://" + findViewById(R.id.login_ip).toString().trim() + ":8080";
+        }
         //FIN CHECK REMPLISSAGE DES CHAMPS
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);

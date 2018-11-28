@@ -1,5 +1,7 @@
 package fr.toulouse.miage.ibae;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -275,5 +277,22 @@ public class MainActivity extends FragmentActivity {
             }
         });
         queue.add(request);
+    }
+
+    public void clickUpdateServer(View view) {
+
+        Ressources.URL = "http://" + findViewById(R.id.param_ip).toString().trim() + ":8080";
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.title_alert_update_server);
+        builder.setMessage(R.string.message_update_server);
+        builder.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 }
