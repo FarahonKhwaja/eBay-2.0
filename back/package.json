@@ -1,5 +1,6 @@
 {
   "name": "back-android",
+  "private": true,
   "main": "server.js",
   "dependencies": {
     "body-parser": "^1.18.3",
