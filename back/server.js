@@ -9,6 +9,7 @@ var colors = require('colors/safe');
 var express = require('express');
 var app = express();
 
+
 // utilisation de bodyParser pour récupérer les données d'un POST par exemple
 var bodyParser = require('body-parser');
 
@@ -17,8 +18,6 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 
-//// Port qui sera utilisé pour l'API REST
-var port = 8080;
 
 //// Création des routes
 
@@ -29,5 +28,10 @@ var router = require("./routes/routes")
 app.use('/', router);
 
 //// Lancement de l'application
-app.listen(port, '0.0.0.0');
+
+// Port qui sera utilisé pour l'API REST
+var port = 8080;
+var addr = '0.0.0.0';
+app.listen(port, addr);
+
 console.log(colors.yellow('Go on localhost:' + port + ' !'));
