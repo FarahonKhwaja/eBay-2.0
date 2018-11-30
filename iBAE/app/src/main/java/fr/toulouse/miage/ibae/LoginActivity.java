@@ -23,7 +23,7 @@ import java.util.logging.Logger;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private EditText nom, password;
+    private EditText nom, password, ip;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,12 +32,14 @@ public class LoginActivity extends AppCompatActivity {
 
         nom = findViewById(R.id.et_nom);
         password = findViewById(R.id.et_password);
+        ip = findViewById(R.id.et_ip);
 
         //Récupération des paramètres éventuels
         Bundle bund = getIntent().getExtras();
         String usernameInscription = "";
         if(bund != null)
             usernameInscription = bund.getString("name");
+        Logger.getAnonymousLogger().log(Level.SEVERE, "");
         nom.setText(usernameInscription);
     }
 
@@ -54,14 +56,15 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(this, "Un des champs est vide", Toast.LENGTH_SHORT).show();
             ok = false;
         }
-        /*if (!(findViewById(R.id.login_ip).toString().equals(""))) {
-            Ressources.URL = "http://" + findViewById(R.id.login_ip).toString().trim() + ":8080";
-        }*/
+        Logger.getAnonymousLogger().log(Level.SEVERE, "IP : " + ip.getText().toString());
+        if(!ip.getText().toString().equals(""))
+            Ressources.URL = "http://" + ip.getText().toString() + ":8080";
+
         //FIN CHECK REMPLISSAGE DES CHAMPS
         if (ok) {
             // Instantiate the RequestQueue.
             RequestQueue queue = Volley.newRequestQueue(this);
-            final String url = "http://192.168.43.231:8080" + "/usercheck"; //Ressources.URL.toString() + "/usercheck";
+            final String url = Ressources.URL.toString() + "/usercheck";
             Logger.getAnonymousLogger().log(Level.SEVERE, "URL Ressources : " + Ressources.URL);
             Logger.getAnonymousLogger().log(Level.SEVERE, "URL : " + url.toString());
 
@@ -103,7 +106,7 @@ public class LoginActivity extends AppCompatActivity {
 
     protected void ConnexionOK(View v) {
         Intent myIntent = new Intent(this, MainActivity.class);
-        myIntent.putExtra("key", "value"); //Optional parameters
+        myIntent.putExtra("name", ""); //Optional parameters
         this.startActivity(myIntent);
     }
 
