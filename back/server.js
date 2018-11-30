@@ -146,7 +146,9 @@ router.route('/usercheck')
       username: user.username,
       pwd: user.pwd
     }).exec(function(err, usercheck) {
-      console.log(err);
+      if (!usercheck){
+        usercheck = {};
+      }
       res.json(usercheck);
       console.log(usercheck);
     });
