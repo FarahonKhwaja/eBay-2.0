@@ -59,9 +59,11 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(this, "Un des champs est vide", Toast.LENGTH_SHORT).show();
             ok = false;
         }
+
         Logger.getAnonymousLogger().log(Level.SEVERE, "IP : " + ip.getText().toString());
         if (!ip.getText().toString().equals(""))
             Ressources.URL = "http://" + ip.getText().toString() + ":8080";
+
 
         //FIN CHECK REMPLISSAGE DES CHAMPS
         if (ok) {
