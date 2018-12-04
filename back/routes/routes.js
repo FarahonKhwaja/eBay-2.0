@@ -51,6 +51,12 @@ router.route('/users')
       username: user.username
     }).exec(function(err, usercheck) {
 
+      if(err){
+        res.status(500);
+        res.json({"message" : err})
+        console.log(colors.bgMagenta(err));
+      }
+
       if (!usercheck) {
 
         userModel.aggregate([{
@@ -61,6 +67,13 @@ router.route('/users')
             }
           }
         }]).exec(function(err, reponse) {
+
+          if(err){
+            res.status(500);
+            res.json({"message" : err})
+            console.log(colors.bgMagenta(err));
+          }
+
           if (!reponse.length) {
             user.id = 0
           } else {
@@ -96,6 +109,13 @@ router.route('/usercheck')
       username: user.username,
       pwd: user.pwd
     }).exec(function(err, usercheck) {
+
+      if(err){
+        res.status(500);
+        res.json({"message" : err})
+        console.log(colors.bgMagenta(err));
+      }
+
       if (!usercheck){
         usercheck = {};
       }
@@ -114,6 +134,13 @@ router.route('/user/:id')
     }, {
       _id: 0
     }).exec(function(err, utilisateur) {
+
+      if(err){
+        res.status(500);
+        res.json({"message" : err})
+        console.log(colors.bgMagenta(err));
+      }
+
       res.json(utilisateur);
 
       console.log(utilisateur);
@@ -126,6 +153,13 @@ router.route('/annonces')
     annonceModel.find({}, {
       _id: 0
     }).exec(function(err, annonces) {
+
+      if(err){
+        res.status(500);
+        res.json({"message" : err})
+        console.log(colors.bgMagenta(err));
+      }
+
       res.json(annonces);
 
       console.log(annonces);
@@ -141,6 +175,13 @@ router.route('/annonces')
         }
       }
     }]).exec(function(err, reponse) {
+
+      if(err){
+        res.status(500);
+        res.json({"message" : err})
+        console.log(colors.bgMagenta(err));
+      }
+
       if (!reponse.length) {
         annonce.id = 0
       } else {
@@ -148,6 +189,13 @@ router.route('/annonces')
       }
 
       annonceModel.create(annonce, function(err, annonceInsere) {
+
+        if(err){
+          res.status(500);
+          res.json({"message" : err})
+          console.log(colors.bgMagenta(err));
+        }
+
         console.log(annonceInsere);
         res.json(annonceInsere);
       });
@@ -163,6 +211,13 @@ router.route('/annonce/:id')
     }, {
       _id: 0
     }).exec(function(err, annonce) {
+
+      if(err){
+        res.status(500);
+        res.json({"message" : err})
+        console.log(colors.bgMagenta(err));
+      }
+
       res.json(annonce);
 
       console.log(annonce);
@@ -181,6 +236,13 @@ router.route('/annonce/:id')
     };
 
     annonceModel.update(condition, updates, function(err, resultat) {
+
+      if(err){
+        res.status(500);
+        res.json({"message" : err})
+        console.log(colors.bgMagenta(err));
+      }
+
       res.json(resultat);
       console.log(resultat);
     })
