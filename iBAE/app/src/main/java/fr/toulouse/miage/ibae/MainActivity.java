@@ -92,9 +92,6 @@ public class MainActivity extends FragmentActivity {
         addFragment(R.id.contenu, new HomeFragment(), "home");
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
-        urlServer = "http://172.20.10.2:8080";
-
     }
 
     protected void addFragment(int containerViewId, Fragment fragment, String fragmentTag) {
@@ -214,7 +211,7 @@ public class MainActivity extends FragmentActivity {
 
     private void ajouterAnnonce() throws JSONException {
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = urlServer + "/annonces";
+        String url = Ressources.URL + "/annonces";
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST ,url, buidJsonAnnonceObject(), new Response.Listener<JSONObject>() {
             @Override
@@ -241,7 +238,7 @@ public class MainActivity extends FragmentActivity {
     }
 
     private void toastErreurMiseEnLigne(){
-        Toast.makeText(this, R.string.message_annonce_cree_e, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, R.string.message_annonce_cree_e, Toast.LENGTH_LONG).show();
     }
 
 
