@@ -43,7 +43,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import fr.toulouse.miage.ibae.adapter.SearchRowAdapter;
 import fr.toulouse.miage.ibae.fragments.HomeFragment;
 import fr.toulouse.miage.ibae.fragments.ProfileFragment;
 import fr.toulouse.miage.ibae.fragments.SearchResultFragment;
@@ -99,6 +98,12 @@ public class MainActivity extends FragmentActivity {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 
+    /**
+     * Ajout d'un fragment dans la MainActivity
+     * @param containerViewId ID du conteneur du fragment
+     * @param fragment Fragment à instancier
+     * @param fragmentTag Tag pour identifier le fragment
+     */
     protected void addFragment(int containerViewId, Fragment fragment, String fragmentTag) {
         getSupportFragmentManager()
                 .beginTransaction()
@@ -106,6 +111,12 @@ public class MainActivity extends FragmentActivity {
                 .commit();
     }
 
+    /**
+     * Remplacement d'un fargment dans la MainActivity
+     * @param containerViewId ID du conteneur du fragment
+     * @param fragment Fragment à instancier
+     * @param fragmentTag Tag pour identifier le fragment
+     */
     protected void replaceFragment(int containerViewId, Fragment fragment, String fragmentTag) {
         getSupportFragmentManager()
                 .beginTransaction()
@@ -113,6 +124,10 @@ public class MainActivity extends FragmentActivity {
                 .commit();
     }
 
+    /**
+     * Action du bouton pour prendre une photo
+     * @param view origine
+     */
     public void clickAjoutPhoto(View view) {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
@@ -134,6 +149,11 @@ public class MainActivity extends FragmentActivity {
         }
     }
 
+    /**
+     * Creation d'un fichier image pour avoir la photo en bonne qualité
+     * @return Le fichier photo
+     * @throws IOException
+     */
     private File createImageFile() throws IOException {
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
@@ -149,6 +169,9 @@ public class MainActivity extends FragmentActivity {
         return image;
     }
 
+    /**
+     * Ajout de la photo à la galerie pour y avoir accès depuis d'autres applications
+     */
     private void galleryAddPic() {
         Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
         File f = new File(mCurrentPhotoPath);
@@ -157,6 +180,10 @@ public class MainActivity extends FragmentActivity {
         this.sendBroadcast(mediaScanIntent);
     }
 
+    /**
+     * Ajout de la photo dans l'ImageView prévue à cet effet
+     * @param image ImageView récepeteur de la photo
+     */
     private void setPic(ImageView image) {
         // Get the dimensions of the View
         int targetW = image.getWidth();
@@ -180,6 +207,12 @@ public class MainActivity extends FragmentActivity {
         image.setImageBitmap(bitmap);
     }
 
+    /**
+     * Action à mener lorqu'une activité taggée se termine
+     * @param requestCode Code/Tag de l'activité se terminant
+     * @param resultCode Code de retour de l'activité
+     * @param data Données contenue dans l'Intent de retour
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
@@ -204,16 +237,29 @@ public class MainActivity extends FragmentActivity {
         }
     }
 
+    /**
+     * Click sur le bouton d'ajout d'une photo à partir de la gallerie
+     * @param view Origine
+     */
     public void clickGetPhoto(View view) {
         Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
         photoPickerIntent.setType("image/*");
         startActivityForResult(photoPickerIntent, GALLERY_REQUEST);
     }
 
+    /**
+     * Click sur le bouton de mise en ligne
+     * @param view
+     * @throws JSONException
+     */
     public void clickVendre(View view) throws JSONException {
         ajouterAnnonce();
     }
 
+    /**
+     * Action d'ajout d'une annonce en base de données
+     * @throws JSONException
+     */
     private void ajouterAnnonce() throws JSONException {
         RequestQueue queue = Volley.newRequestQueue(this);
         String url = Ressources.URL + "/annonces";
@@ -238,15 +284,26 @@ public class MainActivity extends FragmentActivity {
         queue.add(request);
     }
 
+    /**
+     * Affiche un toast de confirmation de mise en ligne
+     */
     private void toastConfirmMiseEnLigne(){
         Toast.makeText(this, R.string.message_annonce_cree, Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * Affiche un toast de message d'erreur lors de la mise en ligne
+     */
     private void toastErreurMiseEnLigne(){
         Toast.makeText(this, R.string.message_annonce_cree_e, Toast.LENGTH_LONG).show();
     }
 
 
+    /**
+     * Construction d'un Objet JSON d'une Annonce à mettre en ligne
+     * @return L'objet JSON
+     * @throws JSONException
+     */
     private JSONObject buidJsonAnnonceObject() throws JSONException {
         JSONObject jsonObject = new JSONObject();
         title = findViewById(R.id.sell_title);
@@ -274,6 +331,10 @@ public class MainActivity extends FragmentActivity {
         return jsonObject;
     }
 
+    /**
+     * Retourne le nombre d'annonces disponibles pour créer un identidfiant différent
+     * de celui en base de données
+     */
     private void getNbAnnonces(){
         RequestQueue queue = Volley.newRequestQueue(this);
         String url = urlServer + "/annonces";
@@ -293,6 +354,10 @@ public class MainActivity extends FragmentActivity {
         queue.add(request);
     }
 
+    /**
+     * Click sur le bouton de mise à jour du serveur node (uniquement disponible en version de DEV)
+     * @param view Origine
+     */
     public void clickUpdateServer(View view) {
 
         EditText ip = findViewById(R.id.param_ip);
@@ -302,16 +367,12 @@ public class MainActivity extends FragmentActivity {
         Toast.makeText(this, R.string.message_update_server, Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * Click sur le bouton de recherche des annonces
+     * @param view Origine
+     * @throws InterruptedException
+     */
     public void clickRechercheAnnonce(View view) throws InterruptedException {
-        vueRecherche();
-    }
-
-
-
-    private void vueRecherche(){
         replaceFragment(R.id.contenu, new SearchResultFragment(), "search");
     }
-
-
-
 }

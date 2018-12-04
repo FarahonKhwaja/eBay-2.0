@@ -17,22 +17,42 @@ import java.util.List;
 import fr.toulouse.miage.ibae.R;
 import fr.toulouse.miage.ibae.metier.Annonce;
 
+/**
+ * Adaptateur custom pour afficher une annonce dans un ListView suite à une recherche
+ */
 public class SearchRowAdapter extends ArrayAdapter<Annonce> {
 
     ArrayList<Annonce> annonces = new ArrayList<>();
 
+    /**
+     * Constucteur de l'Adaptateur de ligne de recherche
+     * @param context Context d'application
+     * @param ressourceID ID du layout ressource à une ligne de la liste
+     * @param annonces Données à afficher dans la liste
+     */
     public SearchRowAdapter(Context context, int ressourceID ,ArrayList<Annonce> annonces) {
         super(context,ressourceID, annonces);
         this.annonces = annonces;
     }
 
 
+    /**
+     * Retourne le nombre d'éléments à afficher
+     * @return Le nombre d'éléments présents dans les données de l'adaptateur
+     */
     @Override
     public int getCount() {
         return super.getCount();
     }
 
 
+    /**
+     * Crée une ligne de la liste
+     * @param position Position dans la liste de données à afficher
+     * @param convertView Vue servant de template de ligne
+     * @param parent Context de l'application
+     * @return La View représentant la ligne à afficher
+     */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
@@ -42,14 +62,10 @@ public class SearchRowAdapter extends ArrayAdapter<Annonce> {
 
         Annonce current = annonces.get(position);
 
-
-
         TextView titre = v.findViewById(R.id.row_title);
         TextView desc = v.findViewById(R.id.row_description);
         TextView prix = v.findViewById(R.id.row_price);
         ImageView img = v.findViewById(R.id.row_pic);
-
-
 
         titre.setText(current.getNom());
         desc.setText(current.getDesciption());

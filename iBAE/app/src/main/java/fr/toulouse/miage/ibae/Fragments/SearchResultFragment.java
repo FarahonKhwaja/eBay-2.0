@@ -35,26 +35,23 @@ import fr.toulouse.miage.ibae.adapter.SearchRowAdapter;
 import fr.toulouse.miage.ibae.metier.Annonce;
 
 
+/**
+ * Fragment restituant les résultats d'une recherche dans un ListView
+ */
 public class SearchResultFragment extends Fragment {
 
 
     private ListView listView;
     private ArrayList<Annonce> lesAnnonces;
     View view;
-    List<String> test;
 
     SearchRowAdapter adapter;
 
+    /**
+     * Constructeur du Fragment
+     */
     public SearchResultFragment() {
         lesAnnonces = new ArrayList<>();
-        test = new ArrayList<>();
-    }
-
-
-    public static SearchResultFragment newInstance() {
-        SearchResultFragment fragment = new SearchResultFragment();
-
-        return fragment;
     }
 
     @Override
@@ -78,6 +75,9 @@ public class SearchResultFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Requête sur la base de données mettant la liste des données à afficher à jour
+     */
     public void requeteRecherche(){
         RequestQueue queue = Volley.newRequestQueue(getActivity());
         String url = Ressources.URL + "/annonces";
@@ -104,6 +104,12 @@ public class SearchResultFragment extends Fragment {
         queue.add(request);
     }
 
+    /**
+     * Convertit un tableau de données JSON en une ArrayList d'Annonces
+     * @param response JSONArray : réponse du serveur contenant les données venant de Mongo
+     * @return ArrayList des Annonces à afficher
+     * @throws JSONException
+     */
     private ArrayList<Annonce> parseAnnonces (JSONArray response) throws JSONException {
         ArrayList<Annonce> lesAnnonces = new ArrayList<>();
         for (int i = 0 ; i < response.length() ; i++ ){
@@ -111,7 +117,6 @@ public class SearchResultFragment extends Fragment {
             Annonce annonce = new Annonce();
             annonce.setId(obj.getInt("id"));
             annonce.setNom(obj.getString("nom"));
-            test.add(obj.getString("nom"));
             try{
                 annonce.setDesciption(obj.getString("description"));
             } catch (JSONException e){
