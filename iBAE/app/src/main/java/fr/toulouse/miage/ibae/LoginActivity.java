@@ -3,7 +3,6 @@ package fr.toulouse.miage.ibae;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -50,11 +49,9 @@ public class LoginActivity extends AppCompatActivity {
      * @param v
      */
     protected void onClickConnexion(final View v) {
-        if (!ip.getText().toString().equals(""))
+        if (!ip.getText().toString().equals("")) {
             Ressources.URL = "http://" + ip.getText().toString() + ":8080";
-
-
-        //FIN CHECK REMPLISSAGE DES CHAMPS
+        }
         if (checkParametres()) {
             // Instantiate the RequestQueue.
             RequestQueue queue = Volley.newRequestQueue(this);
@@ -64,16 +61,13 @@ public class LoginActivity extends AppCompatActivity {
             JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, Ressources.URL.toString() + "/usercheck", writeJSON(), new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
-                    if(checkCredentials(response))
+                    if (checkCredentials(response))
                         ConnexionOK(v);
                 }
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    if (error.toString().equals("com.android.volley.ClientError") || error.toString().equals("com.android.volley.ParseError")) {
-                        Toast.makeText(LoginActivity.this, "Identifiants incorrects", Toast.LENGTH_LONG).show();
-                    } else
-                        Logger.getAnonymousLogger().log(Level.SEVERE, "ERROR SERVER : " + error.toString() + ", host : '" + Ressources.URL + "/usercheck" + "'");
+                    Logger.getAnonymousLogger().log(Level.SEVERE, "ERROR SERVER : " + error.toString() + ", host : '" + Ressources.URL + "/usercheck" + "'");
                 }
             });
             queue.add(request);
