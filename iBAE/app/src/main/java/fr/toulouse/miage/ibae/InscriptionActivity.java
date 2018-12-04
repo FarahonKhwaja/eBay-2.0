@@ -63,6 +63,11 @@ public class InscriptionActivity extends AppCompatActivity {
             Toast.makeText(this, "Un des champs est vide", Toast.LENGTH_SHORT).show();
             ok = false;
         }
+        if(!password1.getText().toString().equals(password2.getText().toString()))
+        {
+            Toast.makeText(this, "Les mots de passe sont différents", Toast.LENGTH_SHORT).show();
+            ok = false;
+        }
         //FIN CHECK REMPLISSAGE DES CHAMPS
 
 
