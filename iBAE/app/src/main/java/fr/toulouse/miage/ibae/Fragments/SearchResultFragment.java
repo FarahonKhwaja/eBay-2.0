@@ -119,7 +119,7 @@ public class SearchResultFragment extends Fragment {
             }
             annonce.setPrixMin(obj.getDouble("prix_min"));
             try{
-                Timestamp dateCreation = new Timestamp(Long.parseLong(obj.getString("dateCreation")));
+                Timestamp dateCreation = Timestamp.valueOf(obj.getString("dateCreation"));
                 annonce.setDateCreation(dateCreation);
                 annonce.setDuree(obj.getInt("duree"));
             } catch (JSONException e){

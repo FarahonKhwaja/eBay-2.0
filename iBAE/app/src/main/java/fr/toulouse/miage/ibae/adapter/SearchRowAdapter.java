@@ -32,7 +32,7 @@ public class SearchRowAdapter extends ArrayAdapter<Annonce> {
         return super.getCount();
     }
 
-    
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
