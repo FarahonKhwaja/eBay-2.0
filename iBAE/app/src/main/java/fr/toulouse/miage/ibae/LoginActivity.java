@@ -23,7 +23,7 @@ import java.util.logging.Logger;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private EditText nom, password;
+    private EditText nom, password, ip;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +32,15 @@ public class LoginActivity extends AppCompatActivity {
 
         nom = findViewById(R.id.et_nom);
         password = findViewById(R.id.et_password);
+        ip = findViewById(R.id.login_ip);
+
+        //Récupération des paramètres éventuels
+        Bundle bund = getIntent().getExtras();
+        String usernameInscription = "";
+        if(bund != null)
+            usernameInscription = bund.getString("name");
+        Logger.getAnonymousLogger().log(Level.SEVERE, "");
+        nom.setText(usernameInscription);
     }
 
     protected void onClickConnexion(final View v) {
@@ -47,35 +56,48 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(this, "Un des champs est vide", Toast.LENGTH_SHORT).show();
             ok = false;
         }
-        if (!(findViewById(R.id.login_ip).toString().equals(""))){
-            EditText ip = findViewById(R.id.login_ip);
-            Ressources.URL ="http://" + ip.getText().toString().trim() + ":8080";
-        }
+
+        Logger.getAnonymousLogger().log(Level.SEVERE, "IP : " + ip.getText().toString());
+        if(!ip.getText().toString().equals(""))
+            Ressources.URL = "http://" + ip.getText().toString() + ":8080";
+
+
         //FIN CHECK REMPLISSAGE DES CHAMPS
-        // Instantiate the RequestQueue.
-        RequestQueue queue = Volley.newRequestQueue(this);
-        String url = Ressources.URL + "/user/";
+        if (ok) {
+            // Instantiate the RequestQueue.
+            RequestQueue queue = Volley.newRequestQueue(this);
+            final String url = Ressources.URL.toString() + "/usercheck";
+            Logger.getAnonymousLogger().log(Level.SEVERE, "URL Ressources : " + Ressources.URL);
+            Logger.getAnonymousLogger().log(Level.SEVERE, "URL : " + url.toString());
 
-        // Request a string response from the provided URL.
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, writeJSON(), new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                Log.i("SERVER RESPONSE : ", response.toString());
-                Toast.makeText(LoginActivity.this, "Vous êtes connecté", Toast.LENGTH_LONG).show();
+            // Request a string response from the provided URL.
+            JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, writeJSON(), new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    Log.i("SERVER RESPONSE : ", response.toString());
+                    if (response == null)
+                        Toast.makeText(LoginActivity.this, "Identifiants incorrects", Toast.LENGTH_LONG).show();
+                    else
+                        Toast.makeText(LoginActivity.this, "Vous êtes connecté", Toast.LENGTH_LONG).show();
 
-                //Check en provenance du serveur à vérifier...
-                ConnexionOK(v);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                if (error.toString().equals("com.android.volley.ClientError")) {
-                    Toast.makeText(LoginActivity.this, "Identifiants incorrects", Toast.LENGTH_LONG).show();
-                } else
-                    Logger.getAnonymousLogger().log(Level.SEVERE, "ERROR SERVER : " + error.toString());
-            }
-        });
-        queue.add(request);
+                    //Check en provenance du serveur à vérifier...
+                    ConnexionOK(v);
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    if (error.toString().equals("com.android.volley.ClientError")) {
+                        Toast.makeText(LoginActivity.this, "Identifiants incorrects", Toast.LENGTH_LONG).show();
+                    }
+                    else if(error.toString().equals("com.android.volley.ParseError")){
+                        Toast.makeText(LoginActivity.this, "Identifiants incorrects", Toast.LENGTH_LONG).show();
+                    }
+                    else
+                        Logger.getAnonymousLogger().log(Level.SEVERE, "ERROR SERVER : " + error.toString() + ", host : '" + url + "'");
+                }
+            });
+            queue.add(request);
+        }
     }
 
     protected void onClickInscription(View v) {
@@ -86,7 +108,7 @@ public class LoginActivity extends AppCompatActivity {
 
     protected void ConnexionOK(View v) {
         Intent myIntent = new Intent(this, MainActivity.class);
-        myIntent.putExtra("key", "value"); //Optional parameters
+        myIntent.putExtra("name", ""); //Optional parameters
         this.startActivity(myIntent);
     }
 

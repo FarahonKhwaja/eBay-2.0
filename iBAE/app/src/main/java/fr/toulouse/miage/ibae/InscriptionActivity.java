@@ -25,7 +25,14 @@ import java.util.logging.Logger;
 
 public class InscriptionActivity extends AppCompatActivity {
 
-    private EditText nom, prenom, mail, adresse, username, password1, password2;
+    private EditText nom;
+    private EditText prenom;
+    private EditText mail;
+    private EditText adresse;
+    private EditText username;
+    private EditText password1;
+    private EditText password2;
+    private String usernameInscription;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,9 +71,14 @@ public class InscriptionActivity extends AppCompatActivity {
 
             // Instantiate the RequestQueue.
             RequestQueue queue = Volley.newRequestQueue(this);
-            String url = Ressources.URL + "/users";
+            final String url = Ressources.URL + "/users";
 
             // Request a string response from the provided URL.
+            try {
+                usernameInscription = writeJSON().get("username").toString();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
             JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, writeJSON(), new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
@@ -89,7 +101,7 @@ public class InscriptionActivity extends AppCompatActivity {
 
     private void startLoginPage(View v) {
         Intent myIntent = new Intent(this, LoginActivity.class);
-        myIntent.putExtra("key", "value"); //Optional parameters
+        myIntent.putExtra("name", usernameInscription); //Optional parameters
         this.startActivity(myIntent);
     }
 

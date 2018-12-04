@@ -61,6 +61,36 @@ Si la valeur du champ `username` est présente en base, le retour est un `status
 }
 ```
 
+### /usercheck
+
+#### POST
+
+Permet de vérifier si un couple `username` / `pwd` appartient à un utilisateur connu, le couple a vérifier est au format :
+
+```json
+{
+"username" : "username",
+"pwd" : "pwd"
+}
+```
+
+retourne l'utilisateur au format :
+
+```json
+{
+  "id": 0,
+  "nom": "nom",
+  "prenom": "prenom",
+  "mail": "adresse mail",
+  "username": "pseudo",
+  "pwd": "mot de passer",
+  "adresse": "adresse postale",
+  "photo": "url d'une image"
+}
+```
+
+retourne `null` si l'utilisateur n'existe pas
+
 ### /user/:id
 
 #### GET
