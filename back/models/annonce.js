@@ -1,8 +1,10 @@
+// Package pour l'utilisation de mongoose
 var mongoose = require('mongoose');
 require('mongoose-double')(mongoose);
 
 var SchemaTypes = mongoose.Schema.Types;
 
+// Définition du schéma des données utilisés
 var annonceSchema = mongoose.Schema({
   id: Number,
   nom: String,
@@ -17,4 +19,5 @@ var annonceSchema = mongoose.Schema({
   utilisateurEnchere: String
 });
 
+// Association du schéma à un model et export pour utilisation
 module.exports = mongoose.model('annonce', annonceSchema);
