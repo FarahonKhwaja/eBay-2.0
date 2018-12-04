@@ -47,6 +47,10 @@ public class InscriptionActivity extends AppCompatActivity {
         password2 = findViewById(R.id.et_pass2);
     }
 
+    /**
+     * Méthode lancée au clic sur le bouton inscription
+     * @param v
+     */
     protected void onClickInscription(final View v) {
         boolean ok = true;
 
@@ -61,6 +65,11 @@ public class InscriptionActivity extends AppCompatActivity {
                 username.getText().toString().equals("") || password1.getText().toString().equals("") || password2.getText().toString().equals("")) {
             //un des champs est vide
             Toast.makeText(this, "Un des champs est vide", Toast.LENGTH_SHORT).show();
+            ok = false;
+        }
+        if(!password1.getText().toString().equals(password2.getText().toString()))
+        {
+            Toast.makeText(this, "Les mots de passe sont différents", Toast.LENGTH_SHORT).show();
             ok = false;
         }
         //FIN CHECK REMPLISSAGE DES CHAMPS
@@ -99,12 +108,20 @@ public class InscriptionActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Méthode lançant l'activité de login, avec en paramètre le username de l'utilisateur
+     * @param v
+     */
     private void startLoginPage(View v) {
         Intent myIntent = new Intent(this, LoginActivity.class);
         myIntent.putExtra("name", usernameInscription); //Optional parameters
         this.startActivity(myIntent);
     }
 
+    /**
+     * Méthode créant un objet JSON contenant les informations de l'utilisateur à inscrire
+     * @return JSONObject identifiant l'utilisateur à inscrire
+     */
     protected JSONObject writeJSON() {
         JSONObject inscrit = new JSONObject();
         try {
