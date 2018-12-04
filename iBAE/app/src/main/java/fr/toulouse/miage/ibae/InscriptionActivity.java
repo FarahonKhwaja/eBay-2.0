@@ -54,19 +54,11 @@ public class InscriptionActivity extends AppCompatActivity {
     protected void onClickInscription(final View v) {
         boolean ok = checkParametres();
         if (ok) {
-            Logger.getAnonymousLogger().log(Level.WARNING, "CHECKS OK");
-
             // Instantiate the RequestQueue.
             RequestQueue queue = Volley.newRequestQueue(this);
-            final String url = Ressources.URL + "/users";
 
             // Request a string response from the provided URL.
-            try {
-                usernameInscription = writeJSON().get("username").toString();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, writeJSON(), new Response.Listener<JSONObject>() {
+            JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, Ressources.URL + "/users", writeJSON(), new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
                     Log.i("SERVER RESPONSE : ", response.toString());
@@ -106,6 +98,7 @@ public class InscriptionActivity extends AppCompatActivity {
             ok = false;
         }
         //FIN CHECK REMPLISSAGE DES CHAMPS
+        Logger.getAnonymousLogger().log(Level.SEVERE, "TESTS : " + ok);
         return ok;
     }
 
@@ -115,7 +108,11 @@ public class InscriptionActivity extends AppCompatActivity {
      */
     private void startLoginPage(View v) {
         Intent myIntent = new Intent(this, LoginActivity.class);
-        myIntent.putExtra("name", usernameInscription); //Optional parameters
+        try {
+            myIntent.putExtra("name", writeJSON().get("username").toString() );
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         this.startActivity(myIntent);
     }
 
