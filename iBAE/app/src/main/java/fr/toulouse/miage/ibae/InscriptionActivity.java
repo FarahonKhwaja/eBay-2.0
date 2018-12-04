@@ -52,29 +52,7 @@ public class InscriptionActivity extends AppCompatActivity {
      * @param v
      */
     protected void onClickInscription(final View v) {
-        boolean ok = true;
-
-        //CHECK REMPLISSAGE DES CHAMPS
-        if (nom.getText().toString().equals(null) || prenom.getText().toString().equals(null) || mail.getText().toString().equals(null) ||
-                username.getText().toString().equals(null) || password1.getText().toString().equals(null) || password2.getText().toString().equals(null)) {
-            //un des champs est vide
-            Toast.makeText(this, "Un des champs est incorrect", Toast.LENGTH_SHORT).show();
-            ok = false;
-        }
-        if (nom.getText().toString().equals("") || prenom.getText().toString().equals("") || mail.getText().toString().equals("") ||
-                username.getText().toString().equals("") || password1.getText().toString().equals("") || password2.getText().toString().equals("")) {
-            //un des champs est vide
-            Toast.makeText(this, "Un des champs est vide", Toast.LENGTH_SHORT).show();
-            ok = false;
-        }
-        if(!password1.getText().toString().equals(password2.getText().toString()))
-        {
-            Toast.makeText(this, "Les mots de passe sont différents", Toast.LENGTH_SHORT).show();
-            ok = false;
-        }
-        //FIN CHECK REMPLISSAGE DES CHAMPS
-
-
+        boolean ok = checkParametres();
         if (ok) {
             Logger.getAnonymousLogger().log(Level.WARNING, "CHECKS OK");
 
@@ -106,6 +84,29 @@ public class InscriptionActivity extends AppCompatActivity {
             });
             queue.add(request);
         }
+    }
+    private boolean checkParametres(){
+        boolean ok = true;
+        //CHECK REMPLISSAGE DES CHAMPS
+        if (nom.getText().toString().equals(null) || prenom.getText().toString().equals(null) || mail.getText().toString().equals(null) ||
+                username.getText().toString().equals(null) || password1.getText().toString().equals(null) || password2.getText().toString().equals(null)) {
+            //un des champs est vide
+            Toast.makeText(this, "Un des champs est incorrect", Toast.LENGTH_SHORT).show();
+            ok = false;
+        }
+        if (nom.getText().toString().equals("") || prenom.getText().toString().equals("") || mail.getText().toString().equals("") ||
+                username.getText().toString().equals("") || password1.getText().toString().equals("") || password2.getText().toString().equals("")) {
+            //un des champs est vide
+            Toast.makeText(this, "Un des champs est vide", Toast.LENGTH_SHORT).show();
+            ok = false;
+        }
+        if(!password1.getText().toString().equals(password2.getText().toString()))
+        {
+            Toast.makeText(this, "Les mots de passe sont différents", Toast.LENGTH_SHORT).show();
+            ok = false;
+        }
+        //FIN CHECK REMPLISSAGE DES CHAMPS
+        return ok;
     }
 
     /**
