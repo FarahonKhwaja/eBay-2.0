@@ -53,18 +53,7 @@ public class LoginActivity extends AppCompatActivity {
      * @param v
      */
     protected void onClickConnexion(final View v) {
-        boolean ok = true;
-        //CHECK REMPLISSAGE DES CHAMPS
-        if (nom.getText().toString().equals(null) || password.getText().toString().equals(null)) {
-            //un des champs est vide
-            Toast.makeText(this, "Un des champs est incorrect", Toast.LENGTH_SHORT).show();
-            ok = false;
-        }
-        if (nom.getText().toString().equals("") || password.getText().toString().equals("")) {
-            //un des champs est vide
-            Toast.makeText(this, "Un des champs est vide", Toast.LENGTH_SHORT).show();
-            ok = false;
-        }
+        boolean ok = checkParametres();
 
         Logger.getAnonymousLogger().log(Level.SEVERE, "IP : " + ip.getText().toString());
         if (!ip.getText().toString().equals(""))
@@ -91,9 +80,6 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.makeText(LoginActivity.this, "Vous êtes connecté", Toast.LENGTH_LONG).show();
                         ConnexionOK(v);
                     }
-
-                    //Check en provenance du serveur à vérifier...
-
                 }
             }, new Response.ErrorListener() {
                 @Override
@@ -108,6 +94,22 @@ public class LoginActivity extends AppCompatActivity {
             });
             queue.add(request);
         }
+    }
+
+    private boolean checkParametres() {
+        boolean ok = true;
+        //CHECK REMPLISSAGE DES CHAMPS
+        if (nom.getText().toString().equals(null) || password.getText().toString().equals(null)) {
+            //un des champs est vide
+            Toast.makeText(this, "Un des champs est incorrect", Toast.LENGTH_SHORT).show();
+            ok = false;
+        }
+        if (nom.getText().toString().equals("") || password.getText().toString().equals("")) {
+            //un des champs est vide
+            Toast.makeText(this, "Un des champs est vide", Toast.LENGTH_SHORT).show();
+            ok = false;
+        }
+        return ok;
     }
 
     /**
