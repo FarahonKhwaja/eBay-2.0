@@ -32,7 +32,7 @@ public class LoginActivity extends AppCompatActivity {
 
         nom = findViewById(R.id.et_nom);
         password = findViewById(R.id.et_password);
-        ip = findViewById(R.id.login_ip);
+        ip = findViewById(R.id.et_ip);
 
         //Récupération des paramètres éventuels
         Bundle bund = getIntent().getExtras();

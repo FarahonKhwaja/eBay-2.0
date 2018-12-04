@@ -227,6 +227,7 @@ public class MainActivity extends FragmentActivity {
             }
         });
         queue.add(request);
+        Toast.makeText(this, "", Toast.LENGTH_SHORT).show();
     }
 
 
@@ -247,9 +248,9 @@ public class MainActivity extends FragmentActivity {
         getNbAnnonces();
         jsonObject.accumulate("id", nbAnnonces+1);
         jsonObject.accumulate("nom",  title.getText().toString());
-        jsonObject.accumulate("decription",  description.getText().toString());
+        jsonObject.accumulate("description",  description.getText().toString());
         jsonObject.accumulate("prix_min", prixMin.getText().toString());
-        jsonObject.accumulate("img", strImg);
+        jsonObject.accumulate("photo", strImg);
 
         return jsonObject;
     }
