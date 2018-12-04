@@ -68,6 +68,9 @@ router.route('/users')
           }
 
           userModel.create(user, function(err, userInsere) {
+            if (err){
+              console.log(err);
+            }
             console.log(userInsere);
             res.json(userInsere);
           });
