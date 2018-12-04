@@ -18,7 +18,6 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.use(bodyParser.json({limit: '50mb', type: 'application/json'}));
-app.use(bodyParser());
 
 
 //// Création des routes
