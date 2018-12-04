@@ -50,13 +50,12 @@ public class LoginActivity extends AppCompatActivity {
      * @param v
      */
     protected void onClickConnexion(final View v) {
-        boolean ok = checkParametres();
         if (!ip.getText().toString().equals(""))
             Ressources.URL = "http://" + ip.getText().toString() + ":8080";
 
 
         //FIN CHECK REMPLISSAGE DES CHAMPS
-        if (ok) {
+        if (checkParametres()) {
             // Instantiate the RequestQueue.
             RequestQueue queue = Volley.newRequestQueue(this);
             Logger.getAnonymousLogger().log(Level.SEVERE, "URL Ressources : " + Ressources.URL + "/usercheck");
