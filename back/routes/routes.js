@@ -2,15 +2,8 @@
 var express = require('express');
 var colors = require('colors/safe');
 
-// Utilisation de mongoDB pour le stockage des informations
 var mongoose = require('mongoose');
-require('mongoose-double')(mongoose);
 
-// Définition des schémas pour utiliser mongo
-var Schema = mongoose.Schema;
-var SchemaTypes = mongoose.Schema.Types;
-
-//// connexion à la base de données mongoDB
 
 // Préparation accès
 var url = 'mongodb://localhost:27017/android';
@@ -26,35 +19,9 @@ mongoose.connect(url, options, function(error) {
 });
 var db = mongoose.connection;
 
-// Définition des schémas
-var annonceSchema = mongoose.Schema({
-  id: Number,
-  nom: String,
-  description: String,
-  prix_min: SchemaTypes.Double,
-  dateCreation: String,
-  utilisateurCreation: String,
-  duree: Number,
-  photo: String,
-  etat: String,
-  derniereEnchere: SchemaTypes.Double,
-  utilisateurEnchere: String
-});
-
-var userSchema = mongoose.Schema({
-  id: Number,
-  nom: String,
-  prenom: String,
-  mail: String,
-  username: String,
-  pwd: String,
-  adresse: String,
-  photo: String
-});
-
 // Définition des modèles
-var annonceModel = mongoose.model('annonce', annonceSchema);
-var userModel = mongoose.model('user', userSchema);
+var annonceModel = require('../models/annonce.js');
+var userModel = require('../models/user.js');
 
 
 // Récupération d'un routeur
