@@ -1,12 +1,8 @@
 package fr.toulouse.miage.ibae;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
-import android.view.KeyEvent;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -53,6 +49,44 @@ public class LoginActivity extends AppCompatActivity {
      * @param v
      */
     protected void onClickConnexion(final View v) {
+        if (!ip.getText().toString().equals("")) {
+            Ressources.URL = "http://" + ip.getText().toString() + ":8080";
+        }
+        if (checkParametres()) {
+            // Instantiate the RequestQueue.
+            RequestQueue queue = Volley.newRequestQueue(this);
+            Logger.getAnonymousLogger().log(Level.SEVERE, "URL Ressources : " + Ressources.URL + "/usercheck");
+
+            // Request a string response from the provided URL.
+            JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, Ressources.URL.toString() + "/usercheck", writeJSON(), new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    if (checkCredentials(response))
+                        ConnexionOK(v);
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Logger.getAnonymousLogger().log(Level.SEVERE, "ERROR SERVER : " + error.toString() + ", host : '" + Ressources.URL + "/usercheck" + "'");
+                }
+            });
+            queue.add(request);
+        }
+    }
+
+    private boolean checkCredentials(JSONObject response) {
+        JSONObject modeleUtilisateurIncorrect = new JSONObject();
+        boolean ok = true;
+        if (response.toString().equals(modeleUtilisateurIncorrect.toString())) {
+            Toast.makeText(LoginActivity.this, "Identifiants incorrects", Toast.LENGTH_LONG).show();
+            ok = false;
+        } else {
+            Toast.makeText(LoginActivity.this, "Vous êtes connecté", Toast.LENGTH_LONG).show();
+        }
+        return ok;
+    }
+
+    private boolean checkParametres() {
         boolean ok = true;
         //CHECK REMPLISSAGE DES CHAMPS
         if (nom.getText().toString().equals(null) || password.getText().toString().equals(null)) {
@@ -65,49 +99,7 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(this, "Un des champs est vide", Toast.LENGTH_SHORT).show();
             ok = false;
         }
-
-        Logger.getAnonymousLogger().log(Level.SEVERE, "IP : " + ip.getText().toString());
-        if (!ip.getText().toString().equals(""))
-            Ressources.URL = "http://" + ip.getText().toString() + ":8080";
-
-
-        //FIN CHECK REMPLISSAGE DES CHAMPS
-        if (ok) {
-            // Instantiate the RequestQueue.
-            RequestQueue queue = Volley.newRequestQueue(this);
-            final String url = Ressources.URL.toString() + "/usercheck";
-            Logger.getAnonymousLogger().log(Level.SEVERE, "URL Ressources : " + Ressources.URL);
-            Logger.getAnonymousLogger().log(Level.SEVERE, "URL : " + url.toString());
-
-            // Request a string response from the provided URL.
-            JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, writeJSON(), new Response.Listener<JSONObject>() {
-                @Override
-                public void onResponse(JSONObject response) {
-                    Log.i("SERVER RESPONSE : ", response.toString());
-                    JSONObject modeleUtilisateurIncorrect = new JSONObject();
-                    if (response.toString().equals(modeleUtilisateurIncorrect.toString()))
-                        Toast.makeText(LoginActivity.this, "Identifiants incorrects", Toast.LENGTH_LONG).show();
-                    else {
-                        Toast.makeText(LoginActivity.this, "Vous êtes connecté", Toast.LENGTH_LONG).show();
-                        ConnexionOK(v);
-                    }
-
-                    //Check en provenance du serveur à vérifier...
-
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    if (error.toString().equals("com.android.volley.ClientError")) {
-                        Toast.makeText(LoginActivity.this, "Identifiants incorrects", Toast.LENGTH_LONG).show();
-                    } else if (error.toString().equals("com.android.volley.ParseError")) {
-                        Toast.makeText(LoginActivity.this, "Identifiants incorrects", Toast.LENGTH_LONG).show();
-                    } else
-                        Logger.getAnonymousLogger().log(Level.SEVERE, "ERROR SERVER : " + error.toString() + ", host : '" + url + "'");
-                }
-            });
-            queue.add(request);
-        }
+        return ok;
     }
 
     /**
