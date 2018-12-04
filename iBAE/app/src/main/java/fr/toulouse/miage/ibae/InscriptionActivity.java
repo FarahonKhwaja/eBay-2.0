@@ -89,13 +89,13 @@ public class InscriptionActivity extends AppCompatActivity {
         //Tests nom, prenom, adresse mail
         if(nom.getText().toString().equals("") || prenom.getText().toString().equals("") || mail.getText().toString().equals(""))
         {
-            Toast.makeText(this, "Un des champs est vide", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Saisissez votre nom, prénom et adresse email", Toast.LENGTH_SHORT).show();
             ok = false;
         }
         //Tests username, passwords
         if (username.getText().toString().equals("") || password1.getText().toString().equals("") || password2.getText().toString().equals("")) {
             //un des champs est vide
-            Toast.makeText(this, "Un des champs est vide", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Saisissez votre username, et votre mot de passe (x2)", Toast.LENGTH_SHORT).show();
             ok = false;
         }
         //Test passwords identiques
