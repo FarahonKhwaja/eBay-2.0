@@ -1,7 +1,5 @@
 package fr.toulouse.miage.ibae;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -18,8 +16,10 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -275,18 +275,10 @@ public class MainActivity extends FragmentActivity {
 
     public void clickUpdateServer(View view) {
 
-        Ressources.URL = "http://" + findViewById(R.id.param_ip).toString().trim() + ":8080";
+        EditText ip = findViewById(R.id.param_ip);
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(R.string.title_alert_update_server);
-        builder.setMessage(R.string.message_update_server);
-        builder.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-        AlertDialog alert = builder.create();
-        alert.show();
+        Ressources.URL = "http://" + ip.getText().toString().trim() + ":8080";
+
+        Toast.makeText(this, R.string.message_update_server, Toast.LENGTH_SHORT).show();
     }
 }
