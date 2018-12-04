@@ -26,4 +26,7 @@
     <string name="param_text_ip">IP du serveur (version de dev)</string>
     <string name="ip_hint">XXXX.XXXX.XXXX.XXXX</string>
     <string name="message_update_server">La nouvelle IP du serveur a bien été enregistrée</string>
+    <string name="message_annonce_cree">Votre annonce à bien été crée</string>
+    <string name="message_annonce_cree_e">Il y a eu un problème lors de la mise en ligne</string>
+
 </resources>

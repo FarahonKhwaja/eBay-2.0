@@ -21,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -218,16 +219,29 @@ public class MainActivity extends FragmentActivity {
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST ,url, buidJsonAnnonceObject(), new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
+                toastConfirmMiseEnLigne();
+                title.setText("");
+                description.setText("");
+                img.setImageBitmap(null);
+                prixMin.setText("");
                 Log.i("SERVER RESPONSE", response.toString());
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                toastErreurMiseEnLigne();
                 Log.e("SERVER RESPONSE", error.toString());
             }
         });
         queue.add(request);
-        Toast.makeText(this, "", Toast.LENGTH_SHORT).show();
+    }
+
+    private void toastConfirmMiseEnLigne(){
+        Toast.makeText(this, R.string.message_annonce_cree, Toast.LENGTH_SHORT).show();
+    }
+
+    private void toastErreurMiseEnLigne(){
+        Toast.makeText(this, R.string.message_annonce_cree_e, Toast.LENGTH_SHORT).show();
     }
 
 
