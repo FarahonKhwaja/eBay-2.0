@@ -18,7 +18,6 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -49,6 +48,7 @@ public class InscriptionActivity extends AppCompatActivity {
 
     /**
      * Méthode lancée au clic sur le bouton inscription
+     *
      * @param v
      */
     protected void onClickInscription(final View v) {
@@ -77,7 +77,8 @@ public class InscriptionActivity extends AppCompatActivity {
             queue.add(request);
         }
     }
-    private boolean checkParametres(){
+
+    private boolean checkParametres() {
         boolean ok = true;
         //CHECK REMPLISSAGE DES CHAMPS
         /*if (nom.getText().toString().equals(null) || prenom.getText().toString().equals(null) || mail.getText().toString().equals(null) ||
@@ -87,20 +88,18 @@ public class InscriptionActivity extends AppCompatActivity {
             ok = false;
         }*/
         //Tests nom, prenom, adresse mail
-        if(nom.getText().toString().equals("") || prenom.getText().toString().equals("") || mail.getText().toString().equals(""))
-        {
+        if (!checkInfos()) {
             Toast.makeText(this, "Saisissez votre nom, prénom et adresse email", Toast.LENGTH_SHORT).show();
             ok = false;
         }
         //Tests username, passwords
-        if (username.getText().toString().equals("") || password1.getText().toString().equals("") || password2.getText().toString().equals("")) {
+        if (checkUserInfos()) {
             //un des champs est vide
             Toast.makeText(this, "Saisissez votre username, et votre mot de passe (x2)", Toast.LENGTH_SHORT).show();
             ok = false;
         }
         //Test passwords identiques
-        if(!password1.getText().toString().equals(password2.getText().toString()))
-        {
+        if (!password1.getText().toString().equals(password2.getText().toString())) {
             Toast.makeText(this, "Les mots de passe sont différents", Toast.LENGTH_SHORT).show();
             ok = false;
         }
@@ -109,14 +108,29 @@ public class InscriptionActivity extends AppCompatActivity {
         return ok;
     }
 
+    private boolean checkUserInfos() {
+        if (username.getText().toString().equals("") || password1.getText().toString().equals("") || password2.getText().toString().equals("")) {
+            return false;
+        }
+        return true;
+    }
+
+    private boolean checkInfos() {
+        if (nom.getText().toString().equals("") || prenom.getText().toString().equals("") || mail.getText().toString().equals("")) {
+            return false;
+        }
+        return true;
+    }
+
     /**
      * Méthode lançant l'activité de login, avec en paramètre le username de l'utilisateur
+     *
      * @param v
      */
     private void startLoginPage(View v) {
         Intent myIntent = new Intent(this, LoginActivity.class);
         try {
-            myIntent.putExtra("name", writeJSON().get("username").toString() );
+            myIntent.putExtra("name", writeJSON().get("username").toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -125,6 +139,7 @@ public class InscriptionActivity extends AppCompatActivity {
 
     /**
      * Méthode créant un objet JSON contenant les informations de l'utilisateur à inscrire
+     *
      * @return JSONObject identifiant l'utilisateur à inscrire
      */
     protected JSONObject writeJSON() {
