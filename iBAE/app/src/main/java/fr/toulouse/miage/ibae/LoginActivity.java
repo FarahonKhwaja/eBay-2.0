@@ -3,7 +3,10 @@ package fr.toulouse.miage.ibae;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -37,7 +40,7 @@ public class LoginActivity extends AppCompatActivity {
         //Récupération des paramètres éventuels
         Bundle bund = getIntent().getExtras();
         String usernameInscription = "";
-        if(bund != null)
+        if (bund != null)
             usernameInscription = bund.getString("name");
         Logger.getAnonymousLogger().log(Level.SEVERE, "");
         nom.setText(usernameInscription);
@@ -58,7 +61,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         Logger.getAnonymousLogger().log(Level.SEVERE, "IP : " + ip.getText().toString());
-        if(!ip.getText().toString().equals(""))
+        if (!ip.getText().toString().equals(""))
             Ressources.URL = "http://" + ip.getText().toString() + ":8080";
 
 
@@ -88,11 +91,9 @@ public class LoginActivity extends AppCompatActivity {
                 public void onErrorResponse(VolleyError error) {
                     if (error.toString().equals("com.android.volley.ClientError")) {
                         Toast.makeText(LoginActivity.this, "Identifiants incorrects", Toast.LENGTH_LONG).show();
-                    }
-                    else if(error.toString().equals("com.android.volley.ParseError")){
+                    } else if (error.toString().equals("com.android.volley.ParseError")) {
                         Toast.makeText(LoginActivity.this, "Identifiants incorrects", Toast.LENGTH_LONG).show();
-                    }
-                    else
+                    } else
                         Logger.getAnonymousLogger().log(Level.SEVERE, "ERROR SERVER : " + error.toString() + ", host : '" + url + "'");
                 }
             });
@@ -102,13 +103,13 @@ public class LoginActivity extends AppCompatActivity {
 
     protected void onClickInscription(View v) {
         Intent myIntent = new Intent(this, InscriptionActivity.class);
-        myIntent.putExtra("key", "value"); //Optional parameters
+        //myIntent.putExtra("key", "value"); //Optional parameters
         this.startActivity(myIntent);
     }
 
     protected void ConnexionOK(View v) {
         Intent myIntent = new Intent(this, MainActivity.class);
-        myIntent.putExtra("name", ""); //Optional parameters
+        myIntent.putExtra("username", nom.getText().toString()); //Optional parameters
         this.startActivity(myIntent);
     }
 
