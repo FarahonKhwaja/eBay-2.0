@@ -8,17 +8,20 @@ public class Annonce {
     private int id;
     private String nom;
     private String desciption;
-    private float prixMin;
+    private double prixMin;
     private Timestamp dateCreation;
-    private Utilisateur creePar;
+    private String creePar;
     private int duree;
     private String photo;
-    private float derniereEnchere;
-    private Utilisateur utilisateurEnchere;
+    private String etat;
+    private double derniereEnchere;
+    private String utilisateurEnchere;
 
     public int getId() {
         return id;
     }
+
+    public void setId(int id){ this.id = id;}
 
     public String getNom() {
         return nom;
@@ -36,11 +39,11 @@ public class Annonce {
         this.desciption = desciption;
     }
 
-    public float getPrixMin() {
+    public double getPrixMin() {
         return prixMin;
     }
 
-    public void setPrixMin(float prixMin) {
+    public void setPrixMin(double prixMin) {
         this.prixMin = prixMin;
     }
 
@@ -52,11 +55,11 @@ public class Annonce {
         this.dateCreation = dateCreation;
     }
 
-    public Utilisateur getCreePar() {
+    public String getCreePar() {
         return creePar;
     }
 
-    public void setCreePar(Utilisateur creePar) {
+    public void setCreePar(String creePar) {
         this.creePar = creePar;
     }
 
@@ -76,20 +79,27 @@ public class Annonce {
         this.photo = photo;
     }
 
-    public float getDerniereEnchere() {
+    public double getDerniereEnchere() {
         return derniereEnchere;
     }
 
-    public void setDerniereEnchere(float derniereEnchere) {
+    public void setDerniereEnchere(double derniereEnchere) {
         this.derniereEnchere = derniereEnchere;
     }
 
-    public Utilisateur getUtilisateurEnchere() {
+    public String getUtilisateurEnchere() {
         return utilisateurEnchere;
     }
 
-    public void setUtilisateurEnchere(Utilisateur utilisateurEnchere) {
+    public void setUtilisateurEnchere(String utilisateurEnchere) {
         this.utilisateurEnchere = utilisateurEnchere;
     }
 
+    public String getEtat() {
+        return etat;
+    }
+
+    public void setEtat(String etat) {
+        this.etat = etat;
+    }
 }

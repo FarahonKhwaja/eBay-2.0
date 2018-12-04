@@ -22,6 +22,14 @@ public class SearchRowAdapter extends BaseAdapter {
 
     private static LayoutInflater inflater = null;
 
+    public SearchRowAdapter(Context context, List<Annonce> lesAnnonces) {
+        // TODO Auto-generated constructor stub
+        this.context = context;
+        this.annonces = lesAnnonces;
+        inflater = (LayoutInflater) context
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    }
+
     @Override
     public int getCount() {
         return 0;

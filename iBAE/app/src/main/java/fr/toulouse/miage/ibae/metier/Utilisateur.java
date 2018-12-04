@@ -66,4 +66,5 @@ public class Utilisateur {
     public void setPhoto(Base64 photo) {
         this.photo = photo;
     }
+
 }

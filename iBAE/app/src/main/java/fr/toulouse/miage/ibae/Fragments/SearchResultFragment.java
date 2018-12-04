@@ -13,6 +13,7 @@ import fr.toulouse.miage.ibae.R;
 public class SearchResultFragment extends Fragment {
 
 
+
     public SearchResultFragment() {
         // Required empty public constructor
     }
