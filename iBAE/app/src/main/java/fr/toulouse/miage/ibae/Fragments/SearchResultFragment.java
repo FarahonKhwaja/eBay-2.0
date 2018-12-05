@@ -1,5 +1,6 @@
 package fr.toulouse.miage.ibae.fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -29,6 +31,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.toulouse.miage.ibae.MainActivity;
 import fr.toulouse.miage.ibae.R;
 import fr.toulouse.miage.ibae.Ressources;
 import fr.toulouse.miage.ibae.adapter.SearchRowAdapter;
@@ -68,9 +71,8 @@ public class SearchResultFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_search_result, container, false);
         listView = view.findViewById(R.id.search_list);
         lesAnnonces.add(new Annonce());
-        adapter = new SearchRowAdapter(getContext(), R.layout.row_search_result,lesAnnonces);
+        adapter = new SearchRowAdapter(getContext(), R.layout.row_search_result,lesAnnonces, (MainActivity)getActivity());
         listView.setAdapter(adapter);
-        Log.i("TEST", "Count adapter : " + adapter.getCount());
         requeteRecherche();
         return view;
     }
@@ -124,7 +126,7 @@ public class SearchResultFragment extends Fragment {
             }
             annonce.setPrixMin(obj.getDouble("prix_min"));
             try{
-                Timestamp dateCreation = Timestamp.valueOf(obj.getString("dateCreation"));
+                Long dateCreation = obj.getLong("dateCreation");
                 annonce.setDateCreation(dateCreation);
                 annonce.setDuree(obj.getInt("duree"));
             } catch (JSONException e){
@@ -137,6 +139,11 @@ public class SearchResultFragment extends Fragment {
             }
             try{
                 annonce.setEtat(obj.getString("etat"));
+            } catch (JSONException e){
+
+            }
+            try{
+                annonce.setCreePar(obj.getString("creePar"));
             } catch (JSONException e){
 
             }

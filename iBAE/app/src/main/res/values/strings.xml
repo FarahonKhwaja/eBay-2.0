@@ -28,5 +28,6 @@
     <string name="message_update_server">La nouvelle IP du serveur a bien été enregistrée</string>
     <string name="message_annonce_cree">Votre annonce à bien été crée</string>
     <string name="message_annonce_cree_e">Il y a eu un problème lors de la mise en ligne</string>
+    <string name="annonce_btn_encherir">JE LE VEUX</string>
 
 </resources>

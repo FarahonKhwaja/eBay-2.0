@@ -3,6 +3,7 @@ package fr.toulouse.miage.ibae.adapter;
 import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +15,9 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.toulouse.miage.ibae.MainActivity;
 import fr.toulouse.miage.ibae.R;
+import fr.toulouse.miage.ibae.fragments.AnnonceFragment;
 import fr.toulouse.miage.ibae.metier.Annonce;
 
 /**
@@ -23,6 +26,7 @@ import fr.toulouse.miage.ibae.metier.Annonce;
 public class SearchRowAdapter extends ArrayAdapter<Annonce> {
 
     ArrayList<Annonce> annonces = new ArrayList<>();
+    MainActivity activity;
 
     /**
      * Constucteur de l'Adaptateur de ligne de recherche
@@ -30,9 +34,10 @@ public class SearchRowAdapter extends ArrayAdapter<Annonce> {
      * @param ressourceID ID du layout ressource à une ligne de la liste
      * @param annonces Données à afficher dans la liste
      */
-    public SearchRowAdapter(Context context, int ressourceID ,ArrayList<Annonce> annonces) {
+    public SearchRowAdapter(Context context, int ressourceID ,ArrayList<Annonce> annonces, MainActivity activity) {
         super(context,ressourceID, annonces);
         this.annonces = annonces;
+        this.activity = activity;
     }
 
 
@@ -60,13 +65,14 @@ public class SearchRowAdapter extends ArrayAdapter<Annonce> {
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         v = inflater.inflate(R.layout.row_search_result, null);
 
-        Annonce current = annonces.get(position);
+        final Annonce current = annonces.get(position);
 
         TextView titre = v.findViewById(R.id.row_title);
         TextView desc = v.findViewById(R.id.row_description);
         TextView prix = v.findViewById(R.id.row_price);
         ImageView img = v.findViewById(R.id.row_pic);
 
+        //Mise en place des données dans la ligne
         titre.setText(current.getNom());
         desc.setText(current.getDesciption());
         if (current.getDerniereEnchere() == 0) {
@@ -78,6 +84,17 @@ public class SearchRowAdapter extends ArrayAdapter<Annonce> {
             byte[] data = Base64.decode(current.getPhoto(), Base64.DEFAULT);
             img.setImageBitmap(BitmapFactory.decodeByteArray(data, 0, data.length));
         }
+
+        // ajout du listener quand on sélectionne une Annonce
+        v.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                activity.replaceFragment(R.id.contenu, AnnonceFragment.newInstance(current.getId()+""), "annonce");
+                Log.i("LISTENER", "ELEMENT : " +current.getNom());
+            }
+
+        });
         return v;
     }
 }

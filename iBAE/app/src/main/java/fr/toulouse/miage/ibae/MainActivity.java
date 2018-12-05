@@ -41,13 +41,11 @@ import java.io.InputStream;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 import fr.toulouse.miage.ibae.fragments.HomeFragment;
 import fr.toulouse.miage.ibae.fragments.ProfileFragment;
 import fr.toulouse.miage.ibae.fragments.SearchResultFragment;
 import fr.toulouse.miage.ibae.fragments.VendreFragment;
-import fr.toulouse.miage.ibae.metier.Annonce;
 
 public class MainActivity extends FragmentActivity {
 
@@ -56,7 +54,6 @@ public class MainActivity extends FragmentActivity {
 
     String mCurrentPhotoPath;
 
-    private String urlServer;
 
 
     private TextView title;
@@ -65,8 +62,7 @@ public class MainActivity extends FragmentActivity {
     private ImageView img;
     private int nbAnnonces;
 
-    private List<Annonce> lesAnnonces;
-
+    private String username = "toto";
 
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -76,7 +72,7 @@ public class MainActivity extends FragmentActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    replaceFragment(R.id.contenu, new HomeFragment(), "home");
+                    replaceFragment(R.id.contenu, HomeFragment.newInstance(username), "home");
                     return true;
                 case R.id.navigation_sell:
                     replaceFragment(R.id.contenu, new VendreFragment(), "vendre");
@@ -93,9 +89,11 @@ public class MainActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        addFragment(R.id.contenu, new HomeFragment(), "home");
+        username = getIntent().getStringExtra("username");
+        addFragment(R.id.contenu, HomeFragment.newInstance(username), "home");
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        Log.i("USERNAME", "username : " + username);
     }
 
     /**
@@ -117,7 +115,7 @@ public class MainActivity extends FragmentActivity {
      * @param fragment Fragment à instancier
      * @param fragmentTag Tag pour identifier le fragment
      */
-    protected void replaceFragment(int containerViewId, Fragment fragment, String fragmentTag) {
+    public void replaceFragment(int containerViewId, Fragment fragment, String fragmentTag) {
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(containerViewId, fragment, fragmentTag)
@@ -325,8 +323,11 @@ public class MainActivity extends FragmentActivity {
         jsonObject.accumulate("prix_min", prixMin.getText().toString());
         jsonObject.accumulate("photo", strImg);
         jsonObject.accumulate("etat", "En cours");
-        jsonObject.accumulate("dateCreation", new Timestamp(new Date().getTime()).toString());
+        Timestamp creation = new Timestamp(new Date().getTime());
+        Long value = creation.getTime();
+        jsonObject.accumulate("dateCreation", value);
         jsonObject.accumulate("duree", 5);
+        jsonObject.accumulate("creePar", username);
 
         return jsonObject;
     }
@@ -337,7 +338,7 @@ public class MainActivity extends FragmentActivity {
      */
     private void getNbAnnonces(){
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = urlServer + "/annonces";
+        String url = Ressources.URL + "/annonces";
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {

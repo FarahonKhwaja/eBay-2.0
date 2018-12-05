@@ -9,7 +9,7 @@ public class Annonce {
     private String nom;
     private String desciption;
     private double prixMin;
-    private Timestamp dateCreation;
+    private Long dateCreation;
     private String creePar;
     private int duree;
     private String photo;
@@ -47,11 +47,11 @@ public class Annonce {
         this.prixMin = prixMin;
     }
 
-    public Timestamp getDateCreation() {
+    public Long getDateCreation() {
         return dateCreation;
     }
 
-    public void setDateCreation(Timestamp dateCreation) {
+    public void setDateCreation(Long dateCreation) {
         this.dateCreation = dateCreation;
     }
 
