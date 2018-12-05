@@ -146,3 +146,5 @@ typings/
 # FuseBox cache
 .fusebox/
 
+# fichier Resources
+./iBAE/app/src/main/java/fr/toulouse/miage/ibae/Ressources.java
