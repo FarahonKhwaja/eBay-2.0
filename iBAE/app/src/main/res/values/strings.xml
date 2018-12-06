@@ -29,5 +29,9 @@
     <string name="message_annonce_cree">Votre annonce à bien été crée</string>
     <string name="message_annonce_cree_e">Il y a eu un problème lors de la mise en ligne</string>
     <string name="annonce_btn_encherir">JE LE VEUX</string>
+    <string name="annonce_et_enchere" >Mon enchère</string>
+    <string name="message_enchere_radine">Non mais t\'as cru quoi ?</string>
+    <string name="message_enchere_erreur">Il y a eu une erreur lors de votre enchère</string>
+    <string name="message_enchere">Votre enchère est bien prise en compte ! Bonne chance !</string>
 
 </resources>

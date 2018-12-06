@@ -18,6 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:text="@string/annonce_btn_encherir"
+            android:onClick="clickEncherir"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -27,7 +28,7 @@
             android:id="@+id/annonce_img"
             android:layout_width="160dp"
             android:layout_height="160dp"
-            android:layout_marginTop="80dp"
+            android:layout_marginTop="70dp"
             android:src="@android:drawable/ic_menu_camera"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -97,5 +98,17 @@
             android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/annonce_titre" />
+
+        <EditText
+            android:id="@+id/annonce_et_enchere"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:ems="10"
+            android:hint="@string/annonce_et_enchere"
+            android:inputType="numberDecimal"
+            app:layout_constraintBottom_toTopOf="@+id/annonce_btn_encherir"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
     </android.support.constraint.ConstraintLayout>
 </FrameLayout>

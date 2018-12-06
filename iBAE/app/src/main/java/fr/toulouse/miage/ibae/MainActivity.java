@@ -46,6 +46,7 @@ import fr.toulouse.miage.ibae.fragments.HomeFragment;
 import fr.toulouse.miage.ibae.fragments.ProfileFragment;
 import fr.toulouse.miage.ibae.fragments.SearchResultFragment;
 import fr.toulouse.miage.ibae.fragments.VendreFragment;
+import fr.toulouse.miage.ibae.metier.Annonce;
 
 public class MainActivity extends FragmentActivity {
 
@@ -61,6 +62,8 @@ public class MainActivity extends FragmentActivity {
     private TextView prixMin;
     private ImageView img;
     private int nbAnnonces;
+
+    public Annonce content;
 
     private String username = "toto";
 
@@ -327,7 +330,7 @@ public class MainActivity extends FragmentActivity {
         Long value = creation.getTime();
         jsonObject.accumulate("dateCreation", value);
         jsonObject.accumulate("duree", 5);
-        jsonObject.accumulate("creePar", username);
+        jsonObject.accumulate("utilisateurCreation", username);
 
         return jsonObject;
     }
@@ -375,5 +378,80 @@ public class MainActivity extends FragmentActivity {
      */
     public void clickRechercheAnnonce(View view) throws InterruptedException {
         replaceFragment(R.id.contenu, new SearchResultFragment(), "search");
+    }
+
+    /**
+     * Requête sur l'API pour mettre à jour l'enchère
+     * @param value nouvelle valeur de l'enchère
+     */
+    private void encherir(Double value){
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = Ressources.URL + "/annonce/" + content.getId();
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.accumulate("id", content.getId());
+            jsonObject.accumulate("derniereEnchere", value);
+            jsonObject.accumulate("utilisateurEnchere", username);
+            JsonObjectRequest request = new JsonObjectRequest(Request.Method.PUT, url, jsonObject, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    toastEnchereSucces();
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    toastEnchereErreur();
+                }
+            });
+            queue.add(request);
+        } catch (JSONException e) {
+            Toast.makeText(this, R.string.message_enchere_erreur, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    /**
+     * Met la vue à jour après une enchère
+     * @param v
+     */
+    private void miseAjourVueAnnonce(View v){
+        EditText value = findViewById(R.id.annonce_et_enchere);
+        TextView prix = findViewById(R.id.annonce_price);
+        TextView lastEnch = findViewById(R.id.annonce_lastenchere);
+        value.setText("");
+        prix.setText(value+"");
+        lastEnch.setText(username);
+    }
+
+    /**
+     * Affiche un toast si succès de l'enchère
+     */
+    private void toastEnchereSucces(){
+        Toast.makeText(this, R.string.message_enchere, Toast.LENGTH_LONG).show();
+    }
+
+    /**
+     * Affiche un toast en cas d'erreur
+     */
+    private void toastEnchereErreur(){
+        Toast.makeText(this, R.string.message_enchere_erreur, Toast.LENGTH_LONG).show();
+    }
+
+    /**
+     * Méthode appelée au click sur le bouton enchérir
+     * @param view Origine
+     */
+    public void clickEncherir(View view) {
+        EditText value = findViewById(R.id.annonce_et_enchere);
+        TextView prix = findViewById(R.id.annonce_price);
+        String[] split = prix.getText().toString().split(" ");
+        String strPrix = split[0];
+        Double prixAnnonce = Double.parseDouble(strPrix);
+        Double prixPropose = Double.parseDouble(value.getText().toString());
+        if (prixPropose > prixAnnonce){
+            encherir(Double.parseDouble(value.getText().toString()));
+            miseAjourVueAnnonce(view);
+        } else{
+            Toast.makeText(this, R.string.message_enchere_radine, Toast.LENGTH_LONG).show();
+        }
     }
 }

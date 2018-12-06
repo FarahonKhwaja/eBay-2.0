@@ -11,7 +11,7 @@ public class Annonce {
     private double prixMin;
     private Long dateCreation;
     private String creePar;
-    private int duree;
+    private Long duree;
     private String photo;
     private String etat;
     private double derniereEnchere;
@@ -63,11 +63,11 @@ public class Annonce {
         this.creePar = creePar;
     }
 
-    public int getDuree() {
+    public Long getDuree() {
         return duree;
     }
 
-    public void setDuree(int duree) {
+    public void setDuree(Long duree) {
         this.duree = duree;
     }
 

@@ -28,6 +28,7 @@ import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
 
+import fr.toulouse.miage.ibae.MainActivity;
 import fr.toulouse.miage.ibae.R;
 import fr.toulouse.miage.ibae.Ressources;
 import fr.toulouse.miage.ibae.metier.Annonce;
@@ -117,9 +118,14 @@ public class AnnonceFragment extends Fragment {
         try{
             Long dateCreation = obj.getLong("dateCreation");
             annonce.setDateCreation(dateCreation);
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTimeInMillis(dateCreation);
-            annonce.setDuree(obj.getInt("duree"));
+            Date date = new Date(dateCreation);
+            Date current = new Date();
+            long diff = minutesBetween(date, current);
+            if (diff > 5){
+                annonce.setDuree((long)0);
+            } else{
+                annonce.setDuree(5 - diff);
+            }
         } catch (JSONException e){
         }
         try {
@@ -129,7 +135,7 @@ public class AnnonceFragment extends Fragment {
 
         }
         try{
-            annonce.setCreePar(obj.getString("creePar"));
+            annonce.setCreePar(obj.getString("utilisateurCreation"));
         } catch (JSONException e){
 
         }
@@ -146,6 +152,10 @@ public class AnnonceFragment extends Fragment {
             annonce.setUtilisateurEnchere("");
         }
         return annonce;
+    }
+
+    private Long minutesBetween(Date first, Date second){
+        return (second.getTime() - first.getTime())/(1000*60);
     }
 
     private void setAnnonce(View v){
@@ -171,6 +181,8 @@ public class AnnonceFragment extends Fragment {
         } else {
             prix.setText(content.getPrixMin() + " €");
         }
+        MainActivity activity = (MainActivity) getActivity();
+        activity.content = content;
     }
 
 }

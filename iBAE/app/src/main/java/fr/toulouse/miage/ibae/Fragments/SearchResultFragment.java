@@ -70,7 +70,6 @@ public class SearchResultFragment extends Fragment {
 
         view = inflater.inflate(R.layout.fragment_search_result, container, false);
         listView = view.findViewById(R.id.search_list);
-        lesAnnonces.add(new Annonce());
         adapter = new SearchRowAdapter(getContext(), R.layout.row_search_result,lesAnnonces, (MainActivity)getActivity());
         listView.setAdapter(adapter);
         requeteRecherche();
@@ -128,7 +127,6 @@ public class SearchResultFragment extends Fragment {
             try{
                 Long dateCreation = obj.getLong("dateCreation");
                 annonce.setDateCreation(dateCreation);
-                annonce.setDuree(obj.getInt("duree"));
             } catch (JSONException e){
             }
             try {
@@ -143,7 +141,7 @@ public class SearchResultFragment extends Fragment {
 
             }
             try{
-                annonce.setCreePar(obj.getString("creePar"));
+                annonce.setCreePar(obj.getString("utilisateurCreation"));
             } catch (JSONException e){
 
             }
