@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -31,6 +32,7 @@ public class InscriptionActivity extends AppCompatActivity {
     private EditText username;
     private EditText password1;
     private EditText password2;
+    private Button bt_inscrire;
     private String usernameInscription;
 
     @Override
@@ -44,6 +46,112 @@ public class InscriptionActivity extends AppCompatActivity {
         username = findViewById(R.id.et_pseudo);
         password1 = findViewById(R.id.et_pass1);
         password2 = findViewById(R.id.et_pass2);
+        bt_inscrire = findViewById(R.id.bt_inscription);
+        bt_inscrire.setEnabled(false);
+
+        setFocusListenerNom();
+        setFocusListenerPrenom();
+        setFocusListenerMail();
+        setFocusListenerAdresse();
+        setFocusListenerUsername();
+        setFocusListenerPassword(password1);
+        setFocusListenerPassword(password2);
+    }
+
+    private void setFocusListenerPassword(final EditText et_pwd) {
+        et_pwd.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    if (et_pwd.getText().toString().trim().length() == 0) {
+                        et_pwd.setError("Saisissez votre mot de passe");
+                        bt_inscrire.setEnabled(false);
+                    } else {
+                        bt_inscrire.setEnabled(true);
+                    }
+                }
+            }
+        });
+    }
+
+    private void setFocusListenerUsername() {
+        username.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    if (username.getText().toString().trim().length() == 0) {
+                        username.setError("Saisissez votre nom d'utilisateur");
+                        bt_inscrire.setEnabled(false);
+                    } else {
+                        bt_inscrire.setEnabled(true);
+                    }
+                }
+            }
+        });
+    }
+
+    private void setFocusListenerAdresse() {
+        adresse.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    if (adresse.getText().toString().trim().length() == 0) {
+                        adresse.setError("Saisissez votre adresse");
+                        bt_inscrire.setEnabled(false);
+                    } else {
+                        bt_inscrire.setEnabled(true);
+                    }
+                }
+            }
+        });
+    }
+
+    private void setFocusListenerMail() {
+        mail.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    if (mail.getText().toString().trim().length() == 0) {
+                        mail.setError("Saisissez votre mail");
+                        bt_inscrire.setEnabled(false);
+                    } else {
+                        bt_inscrire.setEnabled(true);
+                    }
+                }
+            }
+        });
+    }
+
+    private void setFocusListenerPrenom() {
+        prenom.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    if (prenom.getText().toString().trim().length() == 0) {
+                        prenom.setError("Saisissez votre prenom");
+                        bt_inscrire.setEnabled(false);
+                    } else {
+                        bt_inscrire.setEnabled(true);
+                    }
+                }
+            }
+        });
+    }
+
+    private void setFocusListenerNom() {
+        nom.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    if (nom.getText().toString().trim().length() == 0) {
+                        nom.setError("Saisissez votre nom");
+                        bt_inscrire.setEnabled(false);
+                    } else {
+                        bt_inscrire.setEnabled(true);
+                    }
+                }
+            }
+        });
     }
 
     /**
@@ -88,7 +196,7 @@ public class InscriptionActivity extends AppCompatActivity {
             ok = false;
         }*/
         //Tests nom, prenom, adresse mail
-        if (!checkInfos()) {
+        /*if (!checkInfos()) {
             Toast.makeText(this, "Saisissez votre nom, prénom et adresse email", Toast.LENGTH_SHORT).show();
             ok = false;
         }
@@ -97,7 +205,7 @@ public class InscriptionActivity extends AppCompatActivity {
             //un des champs est vide
             Toast.makeText(this, "Saisissez votre username, et votre mot de passe (x2)", Toast.LENGTH_SHORT).show();
             ok = false;
-        }
+        }*/
         //Test passwords identiques
         if (!password1.getText().toString().equals(password2.getText().toString())) {
             Toast.makeText(this, "Les mots de passe sont différents", Toast.LENGTH_SHORT).show();
