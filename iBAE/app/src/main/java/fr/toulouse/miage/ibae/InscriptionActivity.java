@@ -62,10 +62,9 @@ public class InscriptionActivity extends AppCompatActivity {
         et_pwd.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
+                if (!hasFocus) {
                     if (et_pwd.getText().toString().trim().length() == 0) {
-                        et_pwd.setError("Saisissez votre mot de passe");
-                        bt_inscrire.setEnabled(false);
+                        checkOnFocusLost(et_pwd);
                     } else {
                         bt_inscrire.setEnabled(true);
                     }
@@ -74,14 +73,18 @@ public class InscriptionActivity extends AppCompatActivity {
         });
     }
 
+    private void checkOnFocusLost(EditText edit) {
+        edit.setError("Champ obligatoire");
+        bt_inscrire.setEnabled(false);
+    }
+
     private void setFocusListenerUsername() {
         username.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
+                if (!hasFocus) {
                     if (username.getText().toString().trim().length() == 0) {
-                        username.setError("Saisissez votre nom d'utilisateur");
-                        bt_inscrire.setEnabled(false);
+                        checkOnFocusLost(username);
                     } else {
                         bt_inscrire.setEnabled(true);
                     }
@@ -94,10 +97,9 @@ public class InscriptionActivity extends AppCompatActivity {
         adresse.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
+                if (!hasFocus) {
                     if (adresse.getText().toString().trim().length() == 0) {
-                        adresse.setError("Saisissez votre adresse");
-                        bt_inscrire.setEnabled(false);
+                        checkOnFocusLost(adresse);
                     } else {
                         bt_inscrire.setEnabled(true);
                     }
@@ -110,9 +112,11 @@ public class InscriptionActivity extends AppCompatActivity {
         mail.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
+                if (!hasFocus) {
                     if (mail.getText().toString().trim().length() == 0) {
-                        mail.setError("Saisissez votre mail");
+                        checkOnFocusLost(mail);
+                    } else if(!mail.getText().toString().contains("@") || !mail.getText().toString().contains(".")){
+                        mail.setError("Format de saisie incorrect");
                         bt_inscrire.setEnabled(false);
                     } else {
                         bt_inscrire.setEnabled(true);
@@ -126,10 +130,9 @@ public class InscriptionActivity extends AppCompatActivity {
         prenom.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
+                if (!hasFocus) {
                     if (prenom.getText().toString().trim().length() == 0) {
-                        prenom.setError("Saisissez votre prenom");
-                        bt_inscrire.setEnabled(false);
+                        checkOnFocusLost(prenom);
                     } else {
                         bt_inscrire.setEnabled(true);
                     }
@@ -144,8 +147,7 @@ public class InscriptionActivity extends AppCompatActivity {
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
                     if (nom.getText().toString().trim().length() == 0) {
-                        nom.setError("Saisissez votre nom");
-                        bt_inscrire.setEnabled(false);
+                        checkOnFocusLost(nom);
                     } else {
                         bt_inscrire.setEnabled(true);
                     }
@@ -161,6 +163,7 @@ public class InscriptionActivity extends AppCompatActivity {
      */
     protected void onClickInscription(final View v) {
         boolean ok = checkParametres();
+
         if (ok) {
             // Instantiate the RequestQueue.
             RequestQueue queue = Volley.newRequestQueue(this);
@@ -188,30 +191,11 @@ public class InscriptionActivity extends AppCompatActivity {
 
     private boolean checkParametres() {
         boolean ok = true;
-        //CHECK REMPLISSAGE DES CHAMPS
-        /*if (nom.getText().toString().equals(null) || prenom.getText().toString().equals(null) || mail.getText().toString().equals(null) ||
-                username.getText().toString().equals(null) || password1.getText().toString().equals(null) || password2.getText().toString().equals(null)) {
-            //un des champs est vide
-            Toast.makeText(this, "Un des champs est incorrect", Toast.LENGTH_SHORT).show();
-            ok = false;
-        }*/
-        //Tests nom, prenom, adresse mail
-        /*if (!checkInfos()) {
-            Toast.makeText(this, "Saisissez votre nom, prénom et adresse email", Toast.LENGTH_SHORT).show();
-            ok = false;
-        }
-        //Tests username, passwords
-        if (checkUserInfos()) {
-            //un des champs est vide
-            Toast.makeText(this, "Saisissez votre username, et votre mot de passe (x2)", Toast.LENGTH_SHORT).show();
-            ok = false;
-        }*/
         //Test passwords identiques
         if (!password1.getText().toString().equals(password2.getText().toString())) {
             Toast.makeText(this, "Les mots de passe sont différents", Toast.LENGTH_SHORT).show();
             ok = false;
         }
-        //FIN CHECK REMPLISSAGE DES CHAMPS
         Logger.getAnonymousLogger().log(Level.SEVERE, "TESTS : " + ok);
         return ok;
     }
