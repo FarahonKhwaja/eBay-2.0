@@ -20,6 +20,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -29,12 +30,14 @@ import org.json.JSONObject;
 import java.sql.Array;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import fr.toulouse.miage.ibae.MainActivity;
 import fr.toulouse.miage.ibae.R;
 import fr.toulouse.miage.ibae.Ressources;
 import fr.toulouse.miage.ibae.adapter.SearchRowAdapter;
+import fr.toulouse.miage.ibae.custom.CustomJsonRequest;
 import fr.toulouse.miage.ibae.metier.Annonce;
 
 
@@ -43,10 +46,12 @@ import fr.toulouse.miage.ibae.metier.Annonce;
  */
 public class SearchResultFragment extends Fragment {
 
+    private static final String FILTER = "filter";
 
     private ListView listView;
     private ArrayList<Annonce> lesAnnonces;
     View view;
+    private String filter;
 
     SearchRowAdapter adapter;
 
@@ -60,7 +65,9 @@ public class SearchResultFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        if (getArguments() != null) {
+            filter = getArguments().getString(FILTER);
+        }
 
     }
 
@@ -72,18 +79,38 @@ public class SearchResultFragment extends Fragment {
         listView = view.findViewById(R.id.search_list);
         adapter = new SearchRowAdapter(getContext(), R.layout.row_search_result,lesAnnonces, (MainActivity)getActivity());
         listView.setAdapter(adapter);
-        requeteRecherche();
+        requeteRecherche(filter);
         return view;
+    }
+
+    public static SearchResultFragment newInstance(String filter){
+        SearchResultFragment fragment = new SearchResultFragment();
+        Bundle args = new Bundle();
+        args.putString(FILTER, filter);
+        fragment.setArguments(args);
+        return fragment;
     }
 
     /**
      * Requête sur la base de données mettant la liste des données à afficher à jour
      */
-    public void requeteRecherche(){
+    public void requeteRecherche(String filter){
         RequestQueue queue = Volley.newRequestQueue(getActivity());
+        int method = Request.Method.GET;
         String url = Ressources.URL + "/annonces";
+        JSONObject req = null;
+        if (!filter.equals("")){
+            method = Request.Method.POST;
+            url = Ressources.URL +  "/searchannonces";
+            req = new JSONObject();
+            try {
+                req.accumulate("filter", filter);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
 
-        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+        CustomJsonRequest request = new CustomJsonRequest(method, url, req, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 try {
@@ -127,6 +154,14 @@ public class SearchResultFragment extends Fragment {
             try{
                 Long dateCreation = obj.getLong("dateCreation");
                 annonce.setDateCreation(dateCreation);
+                Date date = new Date(dateCreation);
+                Date current = new Date();
+                long diff = minutesBetween(date, current);
+                if (diff > 5){
+                    annonce.setDuree((long)0);
+                } else{
+                    annonce.setDuree(5 - diff);
+                }
             } catch (JSONException e){
             }
             try {
@@ -155,5 +190,9 @@ public class SearchResultFragment extends Fragment {
             lesAnnonces.add(annonce);
         }
         return lesAnnonces;
+    }
+
+    private Long minutesBetween(Date first, Date second){
+        return (second.getTime() - first.getTime())/(1000*60);
     }
 }

@@ -2,6 +2,7 @@ package fr.toulouse.miage.ibae.adapter;
 
 import android.content.Context;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,13 +87,21 @@ public class SearchRowAdapter extends ArrayAdapter<Annonce> {
             img.setImageBitmap(BitmapFactory.decodeByteArray(data, 0, data.length));
         }
 
+        if (current.getDuree() == 0){
+            titre.setTextColor(Color.RED);
+        }
+
         // ajout du listener quand on sélectionne une Annonce
         v.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                activity.replaceFragment(R.id.contenu, AnnonceFragment.newInstance(current.getId()+""), "annonce");
-                Log.i("LISTENER", "ELEMENT : " +current.getNom());
+                if (current.getDuree() == 0){
+                    Toast.makeText(getContext(), R.string.message_fini, Toast.LENGTH_LONG).show();
+                } else{
+                    activity.replaceFragment(R.id.contenu, AnnonceFragment.newInstance(current.getId()+""), "annonce");
+                    Log.i("LISTENER", "ELEMENT : " + current.getNom());
+                }
             }
 
         });

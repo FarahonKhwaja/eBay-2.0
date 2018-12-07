@@ -8,7 +8,9 @@ import android.view.ViewGroup;
 
 import fr.toulouse.miage.ibae.R;
 
-
+/**
+ * Frament profil utilisateur permettant de mettre à jour l'IP du serveur en version de dev
+ */
 public class ProfileFragment extends Fragment {
 
 

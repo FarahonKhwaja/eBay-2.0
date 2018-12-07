@@ -82,7 +82,7 @@
 
         <TextView
             android:id="@+id/annonce_vendeur"
-            android:layout_width="170dp"
+            android:layout_width="131dp"
             android:layout_height="26dp"
             android:layout_marginTop="15dp"
             android:layout_marginEnd="15dp"
@@ -110,5 +110,15 @@
             app:layout_constraintBottom_toTopOf="@+id/annonce_btn_encherir"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/annonce_text_vendu"
+            android:layout_width="85dp"
+            android:layout_height="26dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="1dp"
+            android:text="@string/annonce_text_vendu"
+            app:layout_constraintEnd_toStartOf="@+id/annonce_vendeur"
+            app:layout_constraintTop_toBottomOf="@+id/annonce_description" />
     </android.support.constraint.ConstraintLayout>
 </FrameLayout>

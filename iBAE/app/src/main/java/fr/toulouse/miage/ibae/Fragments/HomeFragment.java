@@ -9,7 +9,9 @@ import android.widget.TextView;
 
 import fr.toulouse.miage.ibae.R;
 
-
+/**
+ * Fragment d'accueil proposant une recherche d'Annonce
+ */
 public class HomeFragment extends Fragment {
 
     private static final String USERNAME = "username";
