@@ -33,5 +33,7 @@
     <string name="message_enchere_radine">Non mais t\'as cru quoi ?</string>
     <string name="message_enchere_erreur">Il y a eu une erreur lors de votre enchère</string>
     <string name="message_enchere">Votre enchère est bien prise en compte ! Bonne chance !</string>
+    <string name="message_fini">L\'enchère n\'est plus disponible ! Dommage !</string>
+    <string name="annonce_text_vendu">Vendu par :</string>
 
 </resources>

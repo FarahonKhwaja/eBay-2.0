@@ -8,6 +8,9 @@ import android.view.ViewGroup;
 
 import fr.toulouse.miage.ibae.R;
 
+/**
+ * Fragment de mise en ligne d'une annonce
+ */
 public class VendreFragment extends Fragment {
 
 

@@ -33,7 +33,9 @@ import fr.toulouse.miage.ibae.R;
 import fr.toulouse.miage.ibae.Ressources;
 import fr.toulouse.miage.ibae.metier.Annonce;
 
-
+/**
+ * Fragment d'une annonce sur laquelle on peut enchérir
+ */
 public class AnnonceFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -93,6 +95,11 @@ public class AnnonceFragment extends Fragment {
         queue.add(request);
     }
 
+    /**
+     * Parse un objet JSON en Annonce
+     * @param obj JSONObject qui contient les données
+     * @return
+     */
     private Annonce JSONToAnnonce(JSONObject obj){
         Annonce annonce = new Annonce();
         try {
@@ -154,10 +161,20 @@ public class AnnonceFragment extends Fragment {
         return annonce;
     }
 
+    /**
+     * Donne la différence en minute entre deux dates
+     * @param first Première date
+     * @param second Seconde date
+     * @return
+     */
     private Long minutesBetween(Date first, Date second){
         return (second.getTime() - first.getTime())/(1000*60);
     }
 
+    /**
+     * Intégre les données de l'annonces dans les composants de la vue
+     * @param v View de l'annonce
+     */
     private void setAnnonce(View v){
         ImageView img = v.findViewById(R.id.annonce_img);
         TextView name = v.findViewById(R.id.annonce_titre);

@@ -74,6 +74,11 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Méthode appelée lors de la réponse du serveur
+     * @param response Réponse du serveur
+     * @return true si connexion OK / sinon false
+     */
     private boolean checkCredentials(JSONObject response) {
         JSONObject modeleUtilisateurIncorrect = new JSONObject();
         boolean ok = true;
@@ -86,6 +91,10 @@ public class LoginActivity extends AppCompatActivity {
         return ok;
     }
 
+    /**
+     * Vérifie si les paramètres sont correctement remplis
+     * @return true si OK / sinon false
+     */
     private boolean checkParametres() {
         boolean ok = true;
         //CHECK REMPLISSAGE DES CHAMPS
@@ -106,7 +115,7 @@ public class LoginActivity extends AppCompatActivity {
      * Méthode lancée au clic sur le bouton inscription
      * Lance l'activité d'inscription
      *
-     * @param v
+     * @param v Origine
      */
     protected void onClickInscription(View v) {
         Intent myIntent = new Intent(this, InscriptionActivity.class);
@@ -117,7 +126,7 @@ public class LoginActivity extends AppCompatActivity {
     /**
      * Méthode lançant l'activité principale de iBAE, avec en paramètre le username de l'utilisateur
      *
-     * @param v
+     * @param v Origine
      */
     protected void ConnexionOK(View v) {
         Intent myIntent = new Intent(this, MainActivity.class);

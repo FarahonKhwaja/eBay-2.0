@@ -377,7 +377,8 @@ public class MainActivity extends FragmentActivity {
      * @throws InterruptedException
      */
     public void clickRechercheAnnonce(View view) throws InterruptedException {
-        replaceFragment(R.id.contenu, new SearchResultFragment(), "search");
+        EditText filter = findViewById(R.id.home_search);
+        replaceFragment(R.id.contenu, SearchResultFragment.newInstance(filter.getText().toString()), "search");
     }
 
     /**
@@ -417,8 +418,8 @@ public class MainActivity extends FragmentActivity {
         EditText value = findViewById(R.id.annonce_et_enchere);
         TextView prix = findViewById(R.id.annonce_price);
         TextView lastEnch = findViewById(R.id.annonce_lastenchere);
+        prix.setText(value.getText().toString()+" €");
         value.setText("");
-        prix.setText(value+"");
         lastEnch.setText(username);
     }
 
