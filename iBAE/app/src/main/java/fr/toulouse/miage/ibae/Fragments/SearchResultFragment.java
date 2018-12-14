@@ -104,7 +104,7 @@ public class SearchResultFragment extends Fragment {
             url = Ressources.URL +  "/searchannonces";
             req = new JSONObject();
             try {
-                req.accumulate("filter", filter);
+                req.accumulate("keyword", filter);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -129,6 +129,7 @@ public class SearchResultFragment extends Fragment {
                 Log.e("ServResponse", error.toString());
             }
         });
+        Log.i("REQUEST", request.toString());
         queue.add(request);
     }
 
